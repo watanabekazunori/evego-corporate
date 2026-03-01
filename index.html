@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EveGo Inc. — Forward Thinking</title>
+  <meta name="description" content="株式会社EveGo｜ワクワクを、前進の力に。1987年創業、飲食DX・営業戦略支援・イベントプロデュースを展開するTech駆動企業。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #FF6B00;
+      --accent-dark: #E55F00;
+      --dark: #0A0A0A;
+      --dark-2: #111111;
+      --dark-3: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F5;
+      --gray-200: #E5E5E5;
+      --gray-300: #D4D4D4;
+      --gray-400: #A3A3A3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --en: 'Montserrat', sans-serif;
+      --jp: 'Noto Sans JP', sans-serif;
+      --expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--jp); font-weight: 500; color: var(--dark); background: var(--white); line-height: 1.8; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    @media (min-width: 768px) { .container { padding: 0 48px; } }
+    @media (min-width: 1200px) { .container { padding: 0 64px; } }
+
+    /* ===== LOADING SCREEN ===== */
+    .loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-text {
+      font-family: var(--en); font-weight: 900; font-size: 48px;
+      color: var(--white); letter-spacing: -0.03em;
+    }
+    .loader-text span { color: var(--accent); }
+    .loader-bar {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: var(--accent); animation: loaderBar 1.5s var(--expo) forwards;
+    }
+    @keyframes loaderBar { 0% { width: 0; } 100% { width: 100%; } }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.9s var(--expo), transform 0.9s var(--expo);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    .reveal-left {
+      opacity: 0; transform: translateX(-60px);
+      transition: opacity 0.9s var(--expo), transform 0.9s var(--expo);
+    }
+    .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0; transform: translateX(60px);
+      transition: opacity 0.9s var(--expo), transform 0.9s var(--expo);
+    }
+    .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-scale {
+      opacity: 0; transform: scale(0.9);
+      transition: opacity 0.9s var(--expo), transform 0.9s var(--expo);
+    }
+    .reveal-scale.is-visible { opacity: 1; transform: scale(1); }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 10000; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 24px 0; transition: all 0.4s var(--expo);
+    }
+    .nav.is-scrolled {
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px); padding: 16px 0;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--en); font-weight: 900; font-size: 26px; color: var(--white); letter-spacing: -0.03em; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: none; list-style: none; gap: 36px; align-items: center; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a {
+      font-family: var(--en); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); transition: color 0.3s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -6px; left: 0;
+      width: 0; height: 2px; background: var(--accent);
+      transition: width 0.4s var(--expo);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: var(--en); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--accent); color: var(--white);
+      padding: 12px 28px; border-radius: 0; transition: all 0.3s var(--expo);
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+    }
+    .nav-cta:hover { background: var(--white); color: var(--dark); transform: translateY(-2px); }
+
+    .nav-mobile-toggle {
+      display: flex; flex-direction: column; gap: 6px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    @media (min-width: 768px) { .nav-mobile-toggle { display: none; } }
+    .nav-mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+    .mobile-menu {
+      position: fixed; inset: 0; background: var(--dark); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s;
+    }
+    .mobile-menu.is-open { opacity: 1; pointer-events: all; }
+    .mobile-menu a { font-family: var(--en); font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: 0.08em; text-transform: uppercase; }
+    .mobile-menu-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 36px; cursor: pointer; color: var(--white); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-canvas { position: absolute; inset: 0; z-index: 1; }
+
+    /* Diagonal geometric shapes */
+    .hero-geo-1 {
+      position: absolute; top: -10%; right: -5%;
+      width: 55%; height: 120%;
+      background: var(--accent);
+      transform: skewX(-12deg);
+      z-index: 2; opacity: 0.9;
+    }
+    .hero-geo-2 {
+      position: absolute; top: 20%; right: 8%;
+      width: 35%; height: 60%;
+      background: var(--dark-3);
+      transform: skewX(-12deg);
+      z-index: 3; opacity: 0.85;
+    }
+    .hero-geo-3 {
+      position: absolute; bottom: -20%; right: 15%;
+      width: 25%; height: 50%;
+      background: rgba(255,107,0,0.3);
+      transform: skewX(-12deg) rotate(5deg);
+      z-index: 2;
+    }
+
+    /* Dot pattern overlay */
+    .hero-dots {
+      position: absolute; inset: 0; z-index: 4;
+      background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 140px 0 100px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--en); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 32px;
+      display: inline-flex; align-items: center; gap: 16px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 40px; height: 2px; background: var(--accent);
+    }
+
+    .hero-heading {
+      font-family: var(--en); font-weight: 900;
+      font-size: clamp(52px, 11vw, 140px);
+      line-height: 0.9; letter-spacing: -0.05em;
+      color: var(--white); margin-bottom: 32px;
+    }
+    .hero-heading .line-2 {
+      display: block;
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+    .hero-heading .accent { color: var(--accent); -webkit-text-stroke: 0; }
+
+    .hero-sub {
+      font-size: clamp(18px, 3vw, 28px); font-weight: 900;
+      color: var(--white); margin-bottom: 48px;
+      letter-spacing: 0.12em;
+    }
+    .hero-sub em { font-style: normal; color: var(--accent); }
+
+    .hero-cta-group { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+
+    .btn-hero {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--en); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 18px 44px; border: none; cursor: pointer;
+      transition: all 0.4s var(--expo); position: relative; overflow: hidden;
+    }
+    .btn-hero--primary {
+      background: var(--accent); color: var(--white);
+      clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+    }
+    .btn-hero--primary:hover {
+      background: var(--white); color: var(--dark);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(255,107,0,0.4);
+    }
+    .btn-hero--ghost {
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,0.25);
+    }
+    .btn-hero--ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-hero .arrow { transition: transform 0.3s var(--expo); }
+    .btn-hero:hover .arrow { transform: translateX(6px); }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .hero-scroll-text {
+      font-family: var(--en); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 48px; background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ===== NUMBERS BAND ===== */
+    .numbers-band {
+      background: var(--dark); padding: 60px 0;
+      position: relative; overflow: hidden;
+      border-bottom: 3px solid var(--accent);
+    }
+    .numbers-band::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 30%; height: 100%; background: var(--accent);
+      transform: skewX(-12deg); transform-origin: top right;
+      opacity: 0.06;
+    }
+    .numbers-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+    }
+    @media (min-width: 768px) { .numbers-grid { grid-template-columns: repeat(4, 1fr); } }
+    .number-item { text-align: center; }
+    .number-value {
+      font-family: var(--en); font-size: clamp(40px, 7vw, 72px);
+      font-weight: 900; color: var(--white); line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .number-value .accent { color: var(--accent); }
+    .number-label {
+      font-family: var(--en); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-top: 12px;
+    }
+
+    /* ===== PHILOSOPHY / ABOUT ===== */
+    .about {
+      padding: 140px 0 120px;
+      position: relative; overflow: hidden;
+      background: var(--white);
+    }
+    .about::before {
+      content: 'EVEGO'; position: absolute; top: 50%; right: -5%;
+      transform: translateY(-50%);
+      font-family: var(--en); font-size: clamp(120px, 20vw, 320px);
+      font-weight: 900; color: rgba(0,0,0,0.02);
+      white-space: nowrap; pointer-events: none; letter-spacing: -0.05em;
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr; gap: 64px;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .about-label {
+      font-family: var(--en); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .about-label::before {
+      content: ''; width: 24px; height: 2px; background: var(--accent);
+    }
+    .about-heading {
+      font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.15;
+      margin-bottom: 32px;
+    }
+    .about-heading .accent { color: var(--accent); }
+    .about-text {
+      font-size: 15px; line-height: 2.2; color: var(--gray-600);
+    }
+    .about-text strong { color: var(--dark); font-weight: 700; }
+
+    .about-visual {
+      position: relative; display: flex; flex-direction: column; gap: 24px;
+    }
+    .about-card {
+      background: var(--gray-50); border-radius: 0; padding: 36px;
+      position: relative; overflow: hidden;
+      border-left: 4px solid var(--accent);
+      transition: all 0.4s var(--expo);
+    }
+    .about-card:hover {
+      transform: translateX(8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+    }
+    .about-card-num {
+      font-family: var(--en); font-size: 64px; font-weight: 900;
+      color: rgba(0,0,0,0.04); position: absolute; top: 8px; right: 16px; line-height: 1;
+    }
+    .about-card-title {
+      font-family: var(--en); font-size: 16px; font-weight: 800;
+      letter-spacing: 0.02em; margin-bottom: 8px;
+    }
+    .about-card-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+
+    /* ===== MARQUEE ===== */
+    .marquee-section {
+      padding: 48px 0; overflow: hidden;
+      background: var(--dark);
+      position: relative;
+    }
+    .marquee-section::before,
+    .marquee-section::after {
+      content: ''; position: absolute; top: 0; width: 30%; height: 100%;
+      z-index: 2;
+    }
+    .marquee-section::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
+    .marquee-section::after { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
+    .marquee-track {
+      display: flex; gap: 48px;
+      animation: marqueeScroll 20s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      font-family: var(--en); font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900; white-space: nowrap; letter-spacing: -0.02em;
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+    }
+    .marquee-item .sep { color: var(--accent); -webkit-text-stroke: 0; margin: 0 24px; font-size: 0.6em; }
+    @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ===== SERVICES - BENTO GRID ===== */
+    .services {
+      padding: 140px 0; background: var(--gray-50);
+      position: relative;
+    }
+    .services::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 6px;
+      background: linear-gradient(to right, var(--accent), var(--accent) 30%, transparent 30%);
+    }
+    .services-header { margin-bottom: 72px; }
+    .section-tag {
+      font-family: var(--en); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+    .services-heading {
+      font-family: var(--en); font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.05;
+    }
+    .services-heading .accent { color: var(--accent); }
+
+    .bento {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+    @media (min-width: 768px) {
+      .bento { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .bento { grid-template-columns: repeat(12, 1fr); }
+      .bento-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+      .bento-item:nth-child(2) { grid-column: span 5; }
+      .bento-item:nth-child(3) { grid-column: span 5; }
+      .bento-item:nth-child(4) { grid-column: span 12; }
+    }
+
+    .bento-item {
+      position: relative; overflow: hidden;
+      background: var(--white);
+      padding: 40px; min-height: 260px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: all 0.5s var(--expo);
+      cursor: pointer;
+    }
+    .bento-item::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 0; background: var(--accent);
+      transition: height 0.5s var(--expo);
+    }
+    .bento-item:hover::before { height: 100%; }
+    .bento-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.1);
+    }
+    @media (min-width: 1024px) {
+      .bento-item:nth-child(1) { padding: 48px; }
+      .bento-item:nth-child(4) {
+        background: var(--dark); color: var(--white);
+        flex-direction: row; align-items: center; gap: 48px;
+      }
+      .bento-item:nth-child(4)::before { background: var(--accent); width: 100%; height: 4px; top: auto; bottom: 0; left: 0; }
+      .bento-item:nth-child(4):hover::before { width: 100%; height: 4px; }
+      .bento-item:nth-child(4) .bento-desc { color: rgba(255,255,255,0.6); }
+    }
+
+    .bento-num {
+      font-family: var(--en); font-size: 100px; font-weight: 900;
+      color: rgba(0,0,0,0.03); position: absolute; top: -10px; right: 16px; line-height: 1;
+      pointer-events: none;
+    }
+    .bento-item:nth-child(4) .bento-num { color: rgba(255,255,255,0.04); }
+
+    .bento-tag {
+      font-family: var(--en); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .bento-tag::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--accent); clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+
+    .bento-title {
+      font-family: var(--en); font-size: clamp(22px, 3vw, 32px);
+      font-weight: 900; letter-spacing: -0.02em;
+      margin-bottom: 16px; line-height: 1.15;
+    }
+    .bento-desc { font-size: 13px; line-height: 1.9; color: var(--gray-500); }
+    .bento-features {
+      list-style: none; margin-top: 24px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .bento-features li {
+      font-size: 13px; color: var(--gray-600);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .bento-features li::before {
+      content: ''; width: 20px; height: 2px;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    .bento-arrow {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--gray-50); transition: all 0.3s var(--expo);
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+      align-self: flex-end;
+    }
+    .bento-item:hover .bento-arrow { background: var(--accent); }
+    .bento-item:hover .bento-arrow svg { stroke: white; }
+    .bento-item:nth-child(4) .bento-arrow { background: rgba(255,255,255,0.1); }
+    .bento-item:nth-child(4):hover .bento-arrow { background: var(--accent); }
+
+    /* ===== SCOPE SECTION ===== */
+    .scope {
+      padding: 140px 0; background: var(--dark);
+      position: relative; overflow: hidden;
+    }
+    .scope::before {
+      content: ''; position: absolute; top: -50px; right: -100px;
+      width: 500px; height: 500px; border: 2px solid rgba(255,107,0,0.1);
+      border-radius: 50%; pointer-events: none;
+    }
+    .scope::after {
+      content: ''; position: absolute; bottom: -80px; left: -80px;
+      width: 300px; height: 300px; border: 2px solid rgba(255,107,0,0.06);
+      border-radius: 50%; pointer-events: none;
+    }
+
+    .scope-header { margin-bottom: 80px; }
+    .scope-heading {
+      font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900; letter-spacing: -0.03em; color: var(--white); line-height: 1.1;
+    }
+    .scope-heading .accent { color: var(--accent); }
+
+    .scope-grid {
+      display: grid; grid-template-columns: 1fr; gap: 0;
+    }
+    @media (min-width: 768px) { .scope-grid { grid-template-columns: 1fr 1fr; } }
+
+    .scope-item {
+      padding: 48px 0; position: relative;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.4s var(--expo);
+    }
+    @media (min-width: 768px) { .scope-item { padding: 48px 40px; } }
+    .scope-item:hover { background: rgba(255,255,255,0.02); }
+
+    .scope-item-num {
+      font-family: var(--en); font-size: 48px; font-weight: 900;
+      color: var(--accent); line-height: 1; margin-bottom: 20px;
+      letter-spacing: -0.03em; opacity: 0.8;
+    }
+    .scope-item-en {
+      font-family: var(--en); font-size: 20px; font-weight: 800;
+      color: var(--white); letter-spacing: -0.01em; margin-bottom: 4px;
+    }
+    .scope-item-jp {
+      font-size: 12px; color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em; margin-bottom: 16px;
+    }
+    .scope-item-desc {
+      font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.5);
+    }
+    .scope-item-line {
+      position: absolute; top: 0; left: 0;
+      width: 0; height: 2px; background: var(--accent);
+      transition: width 0.6s var(--expo);
+    }
+    .scope-item:hover .scope-item-line { width: 60px; }
+
+    /* ===== COMPANY ===== */
+    .company {
+      padding: 140px 0; background: var(--white);
+      position: relative;
+    }
+    .company::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 40%; height: 100%;
+      background: var(--gray-50);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .company-inner { position: relative; z-index: 2; }
+    .company-header { margin-bottom: 80px; }
+    .company-heading {
+      font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
+    }
+    .company-heading .accent { color: var(--accent); }
+
+    .company-grid {
+      display: grid; grid-template-columns: 1fr; gap: 80px;
+    }
+    @media (min-width: 768px) { .company-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .info-table { display: flex; flex-direction: column; }
+    .info-row {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 24px; padding: 24px 0;
+      border-bottom: 1px solid var(--gray-200);
+      align-items: start;
+    }
+    @media (min-width: 768px) { .info-row { grid-template-columns: 140px 1fr; } }
+    .info-label {
+      font-family: var(--en); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gray-400); padding-top: 4px;
+    }
+    .info-value { font-size: 14px; color: var(--gray-700); line-height: 1.8; }
+    .info-value strong { font-weight: 700; color: var(--dark); }
+
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--gray-200);
+    }
+    .tl-item { padding-bottom: 36px; position: relative; }
+    .tl-item::before {
+      content: ''; position: absolute; left: -44px; top: 4px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--gray-300); border: 3px solid var(--white);
+      transition: all 0.3s;
+    }
+    .tl-item:last-child::before { background: var(--accent); }
+    .tl-item:hover::before { background: var(--accent); transform: scale(1.3); }
+    .tl-year {
+      font-family: var(--en); font-size: 13px; font-weight: 800;
+      color: var(--accent); letter-spacing: 0.06em;
+    }
+    .tl-text { font-size: 13px; color: var(--gray-500); margin-top: 4px; line-height: 1.7; }
+    .tl-text strong { color: var(--dark); }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      padding: 140px 0 100px;
+      background: var(--accent);
+      position: relative; overflow: hidden;
+      color: var(--white);
+    }
+    .contact::before {
+      content: ''; position: absolute; top: -80px; right: -100px;
+      width: 50%; height: 140%;
+      background: rgba(0,0,0,0.12);
+      transform: skewX(-12deg);
+    }
+    .contact::after {
+      content: ''; position: absolute; bottom: -60px; left: -50px;
+      width: 30%; height: 80%;
+      background: rgba(0,0,0,0.06);
+      transform: skewX(-12deg);
+    }
+
+    .contact-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
+    }
+    @media (min-width: 768px) { .contact-inner { grid-template-columns: 1fr auto; } }
+
+    .contact-heading {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900; line-height: 1.3;
+      letter-spacing: 0.02em;
+    }
+    .contact-sub {
+      font-size: 14px; margin-top: 16px; line-height: 1.9;
+      opacity: 0.8;
+    }
+
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 16px;
+      font-family: var(--en); font-size: 16px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--white); color: var(--dark);
+      padding: 22px 56px; border: none; cursor: pointer;
+      transition: all 0.4s var(--expo);
+      clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+      white-space: nowrap;
+    }
+    .contact-btn:hover {
+      background: var(--dark); color: var(--white);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .contact-btn .arrow { transition: transform 0.3s var(--expo); }
+    .contact-btn:hover .arrow { transform: translateX(8px); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark); color: var(--white);
+      padding: 80px 0 40px; position: relative;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1fr; gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    @media (min-width: 768px) { .footer-top { grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 48px; } }
+
+    .footer-brand-name {
+      font-family: var(--en); font-weight: 900; font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+    .footer-brand-name span { color: var(--accent); }
+    .footer-tagline {
+      font-family: var(--en); font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.35); margin-top: 16px;
+      font-style: italic; letter-spacing: 0.03em;
+    }
+    .footer-col-title {
+      font-family: var(--en); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .footer-col a {
+      font-size: 13px; color: rgba(255,255,255,0.5);
+      transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .footer-col a:hover { color: var(--accent); transform: translateX(4px); }
+    .footer-col a::before {
+      content: ''; width: 0; height: 1px;
+      background: var(--accent); transition: width 0.3s var(--expo);
+    }
+    .footer-col a:hover::before { width: 12px; }
+
+    .footer-bottom {
+      padding-top: 32px; display: flex;
+      flex-direction: column; gap: 16px; align-items: center;
+    }
+    @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+    .footer-copyright {
+      font-family: var(--en); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.25em; color: rgba(255,255,255,0.2);
+    }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 11px; color: rgba(255,255,255,0.2); transition: color 0.3s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ===== FLOATING SIDE ELEMENTS ===== */
+    .side-label {
+      position: fixed; right: 20px; top: 50%; z-index: 100;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: var(--en); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.3em; color: rgba(255,255,255,0.2);
+      text-transform: uppercase; display: none;
+    }
+    @media (min-width: 1024px) { .side-label { display: block; } }
+
+    /* ===== RESPONSIVE ADJUSTMENTS ===== */
+    @media (max-width: 767px) {
+      .hero-geo-1 { width: 80%; opacity: 0.3; }
+      .hero-geo-2 { display: none; }
+      .hero-geo-3 { display: none; }
+      .bento-item:nth-child(4) { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-text">Eve<span>Go</span></div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Side Label -->
+  <div class="side-label">EveGo Inc. — Forward Thinking</div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">Eve<span>Go</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#company">Company</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-mobile-toggle" id="mobileToggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileClose" aria-label="閉じる">&times;</button>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#scope" class="mobile-link">Scope</a>
+    <a href="#company" class="mobile-link">Company</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-geo-1"></div>
+    <div class="hero-geo-2"></div>
+    <div class="hero-geo-3"></div>
+    <div class="hero-dots"></div>
+
+    <div class="container hero-content">
+      <div class="hero-eyebrow reveal">Since 1987 — Osaka, Japan</div>
+      <h1 class="hero-heading reveal reveal-delay-1">
+        FORWARD<br>
+        <span class="line-2">THINK<span class="accent">ING</span></span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        <em>ワクワク</em>を、前進の力に。
+      </p>
+      <div class="hero-cta-group reveal reveal-delay-3">
+        <a href="#contact" class="btn-hero btn-hero--primary">
+          Get in Touch <span class="arrow">&rarr;</span>
+        </a>
+        <a href="#services" class="btn-hero btn-hero--ghost">
+          Explore Services
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="hero-scroll-text">Scroll</div>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== NUMBERS BAND ===== -->
+  <section class="numbers-band">
+    <div class="container">
+      <div class="numbers-grid">
+        <div class="number-item reveal">
+          <div class="number-value" data-count="38">0<span class="accent">+</span></div>
+          <div class="number-label">Years of Legacy</div>
+        </div>
+        <div class="number-item reveal reveal-delay-1">
+          <div class="number-value" data-count="4">0</div>
+          <div class="number-label">Business Domains</div>
+        </div>
+        <div class="number-item reveal reveal-delay-2">
+          <div class="number-value">AI</div>
+          <div class="number-label">Powered Platform</div>
+        </div>
+        <div class="number-item reveal reveal-delay-3">
+          <div class="number-value">DX</div>
+          <div class="number-label">Tech-Driven Growth</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT / PHILOSOPHY ===== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="about-label reveal">Our Philosophy</div>
+          <h2 class="about-heading reveal reveal-delay-1">
+            <span class="accent">High-Tech</span> meets<br>
+            <span class="accent">High-Touch</span>.
+          </h2>
+          <p class="about-text reveal reveal-delay-2">
+            1987年、大阪で始まったイベントプロデュース事業。<br>
+            <strong>40年近い歩みの中で培った「人との信頼関係」</strong>を礎に、
+            私たちは今、AIとデータを駆使した次世代のビジネスを創造しています。<br><br>
+            テクノロジーの力で効率を高め、<strong>人の温もりで関係を深める</strong>。
+            それが、EveGoの約束です。
+          </p>
+        </div>
+        <div class="about-visual">
+          <div class="about-card reveal-right">
+            <div class="about-card-num">01</div>
+            <div class="about-card-title">Data-Driven</div>
+            <div class="about-card-desc">独自データ基盤とAIで、意思決定を加速</div>
+          </div>
+          <div class="about-card reveal-right reveal-delay-1">
+            <div class="about-card-num">02</div>
+            <div class="about-card-title">Human-Centric</div>
+            <div class="about-card-desc">人と人の信頼関係を何より大切に</div>
+          </div>
+          <div class="about-card reveal-right reveal-delay-2">
+            <div class="about-card-num">03</div>
+            <div class="about-card-title">Forward Thinking</div>
+            <div class="about-card-desc">常に未来を見据え、変化を恐れない</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <section class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">RestHub <span class="sep">/</span></span>
+      <span class="marquee-item">Sales Agency <span class="sep">/</span></span>
+      <span class="marquee-item">Event Produce <span class="sep">/</span></span>
+      <span class="marquee-item">D.tail Kyoto <span class="sep">/</span></span>
+      <span class="marquee-item">RestHub <span class="sep">/</span></span>
+      <span class="marquee-item">Sales Agency <span class="sep">/</span></span>
+      <span class="marquee-item">Event Produce <span class="sep">/</span></span>
+      <span class="marquee-item">D.tail Kyoto <span class="sep">/</span></span>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES - BENTO GRID ===== -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="services-header">
+        <div class="section-tag reveal">Service Portfolio</div>
+        <h2 class="services-heading reveal reveal-delay-1">What We <span class="accent">Build</span>.</h2>
+      </div>
+
+      <div class="bento">
+        <!-- RestHub - Large -->
+        <div class="bento-item reveal-scale">
+          <div class="bento-num">01</div>
+          <div>
+            <div class="bento-tag">DX Platform</div>
+            <h3 class="bento-title">RestHub</h3>
+            <p class="bento-desc">飲食業界に特化したDXプラットフォーム。独自のデータ基盤により、店舗運営・顧客分析・マーケティングをワンストップで支援します。</p>
+            <ul class="bento-features">
+              <li>独自データ基盤による顧客インサイト</li>
+              <li>AI活用の需要予測・在庫最適化</li>
+              <li>統合マーケティングダッシュボード</li>
+              <li>リアルタイム経営分析レポート</li>
+            </ul>
+          </div>
+          <div class="bento-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Sales Agency -->
+        <div class="bento-item reveal-scale reveal-delay-1">
+          <div class="bento-num">02</div>
+          <div>
+            <div class="bento-tag">Strategic Sales</div>
+            <h3 class="bento-title">Sales Agency</h3>
+            <p class="bento-desc">インテントデータを活用した営業代行・アライアンス構築。確度の高いリード獲得を実現します。</p>
+          </div>
+          <div class="bento-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Event Produce -->
+        <div class="bento-item reveal-scale reveal-delay-2">
+          <div class="bento-num">03</div>
+          <div>
+            <div class="bento-tag">Experience</div>
+            <h3 class="bento-title">Event Produce</h3>
+            <p class="bento-desc">1987年から継承するプロフェッショナルなイベント企画・演出力。伝統と革新の融合。</p>
+          </div>
+          <div class="bento-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <!-- D.tail Kyoto - Wide -->
+        <div class="bento-item reveal-scale reveal-delay-3">
+          <div class="bento-num">04</div>
+          <div>
+            <div class="bento-tag">Lifestyle</div>
+            <h3 class="bento-title">D.tail Kyoto</h3>
+            <p class="bento-desc">プロフェッショナルのためのオーダースーツブランド。京都の美意識と現代のテーラリングを融合し、あなただけの一着を仕立てます。</p>
+          </div>
+          <div class="bento-arrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCOPE ===== -->
+  <section class="scope" id="scope">
+    <div class="container">
+      <div class="scope-header">
+        <div class="section-tag reveal" style="color:var(--accent);">Business Scope</div>
+        <h2 class="scope-heading reveal reveal-delay-1">Four Pillars of <span class="accent">Growth</span>.</h2>
+      </div>
+
+      <div class="scope-grid">
+        <div class="scope-item reveal">
+          <div class="scope-item-line"></div>
+          <div class="scope-item-num">01</div>
+          <div class="scope-item-en">DX Platform</div>
+          <div class="scope-item-jp">飲食DXプラットフォーム事業</div>
+          <div class="scope-item-desc">独自データ基盤を核に、飲食店の経営課題をテクノロジーで解決。店舗運営の効率化から集客・リピート施策まで、データドリブンな成長を支援します。</div>
+        </div>
+        <div class="scope-item reveal reveal-delay-1">
+          <div class="scope-item-line"></div>
+          <div class="scope-item-num">02</div>
+          <div class="scope-item-en">Strategic Sales</div>
+          <div class="scope-item-jp">営業戦略支援事業</div>
+          <div class="scope-item-desc">インテントセールスの手法を用い、顧客の購買意欲を正確に捉えた営業代行とアライアンス構築。成果にコミットするパートナーシップを提供します。</div>
+        </div>
+        <div class="scope-item reveal reveal-delay-2">
+          <div class="scope-item-line"></div>
+          <div class="scope-item-num">03</div>
+          <div class="scope-item-en">Experience</div>
+          <div class="scope-item-jp">イベントプロデュース事業</div>
+          <div class="scope-item-desc">1987年の創業以来培ってきた企画力と演出力。企業イベント、展示会、パーティーなど、あらゆるシーンで記憶に残る体験を創造します。</div>
+        </div>
+        <div class="scope-item reveal reveal-delay-3">
+          <div class="scope-item-line"></div>
+          <div class="scope-item-num">04</div>
+          <div class="scope-item-en">Lifestyle</div>
+          <div class="scope-item-jp">ライフスタイル事業</div>
+          <div class="scope-item-desc">D.tail Kyotoを通じて、ビジネスパーソンの装いをプロデュース。素材・縫製・フィットにこだわったオーダースーツで、信頼を纏う体験を提供します。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPANY ===== -->
+  <section class="company" id="company">
+    <div class="container company-inner">
+      <div class="company-header">
+        <div class="section-tag reveal">Legacy & Trust</div>
+        <h2 class="company-heading reveal reveal-delay-1">Company <span class="accent">Profile</span>.</h2>
+      </div>
+
+      <div class="company-grid">
+        <div class="info-table">
+          <div class="info-row reveal">
+            <div class="info-label">Company</div>
+            <div class="info-value"><strong>株式会社EveGo</strong><br>EveGo Inc.</div>
+          </div>
+          <div class="info-row reveal reveal-delay-1">
+            <div class="info-label">Founded</div>
+            <div class="info-value">1987年4月</div>
+          </div>
+          <div class="info-row reveal reveal-delay-1">
+            <div class="info-label">CEO</div>
+            <div class="info-value">代表取締役 CEO<br><strong>吉井 宏</strong></div>
+          </div>
+          <div class="info-row reveal reveal-delay-2">
+            <div class="info-label">COO</div>
+            <div class="info-value">取締役 COO<br><strong>伊達 裕司</strong></div>
+          </div>
+          <div class="info-row reveal reveal-delay-2">
+            <div class="info-label">Capital</div>
+            <div class="info-value">1,000万円</div>
+          </div>
+          <div class="info-row reveal reveal-delay-3">
+            <div class="info-label">Address</div>
+            <div class="info-value">〒559-0011<br>大阪市住之江区粉浜3丁目6-20</div>
+          </div>
+          <div class="info-row reveal reveal-delay-3">
+            <div class="info-label">Business</div>
+            <div class="info-value">飲食DXプラットフォーム事業<br>営業戦略支援事業<br>イベントプロデュース事業<br>ライフスタイル事業</div>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item reveal">
+            <div class="tl-year">1987</div>
+            <div class="tl-text">株式会社イベントグループ大阪として設立。<br>イベントプロデュース事業を開始。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-1">
+            <div class="tl-year">1990s</div>
+            <div class="tl-text">大阪を拠点に企業イベント・展示会の企画運営実績を拡大。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-1">
+            <div class="tl-year">2000s</div>
+            <div class="tl-text">飲食業界との連携を深め、新たな事業領域へ進出。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-2">
+            <div class="tl-year">2010s</div>
+            <div class="tl-text">テクノロジー活用を本格化。データ駆動型ビジネスモデルへの転換を開始。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-2">
+            <div class="tl-year">2020</div>
+            <div class="tl-text">飲食DXプラットフォーム「RestHub」の開発に着手。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-3">
+            <div class="tl-year">2024</div>
+            <div class="tl-text">営業戦略支援事業を開始。D.tail Kyotoブランドをローンチ。</div>
+          </div>
+          <div class="tl-item reveal reveal-delay-4">
+            <div class="tl-year">2025</div>
+            <div class="tl-text"><strong>株式会社EveGoへ商号変更。</strong><br>「Forward Thinking」を掲げ、新たな章へ。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner">
+      <div class="reveal">
+        <div class="contact-heading">未来を、語り合いましょう。</div>
+        <p class="contact-sub">事業のご相談、パートナーシップのお問い合わせなど、<br>お気軽にご連絡ください。</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <a href="mailto:info@evego.co.jp" class="contact-btn">
+          Contact Us <span class="arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">Eve<span>Go</span></div>
+          <div class="footer-tagline">Excitement into Forward Momentum.</div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Services</div>
+          <ul>
+            <li><a href="#services">RestHub</a></li>
+            <li><a href="#services">Sales Agency</a></li>
+            <li><a href="#services">Event Produce</a></li>
+            <li><a href="#services">D.tail Kyoto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <ul>
+            <li><a href="#company">About Us</a></li>
+            <li><a href="#company">Leadership</a></li>
+            <li><a href="#company">History</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Connect</div>
+          <ul>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2025 EVEGO INC. ALL RIGHTS RESERVED.</div>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== LOADER =====
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('is-done');
+      }, 1800);
+    });
+
+    // ===== SCROLL REVEAL =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ===== NAV SCROLL =====
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('is-scrolled', window.pageYOffset > 80);
+    }, { passive: true });
+
+    // ===== PROGRESS BAR =====
+    const progressBar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const pct = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+
+    // ===== MOBILE MENU =====
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    mobileToggle.addEventListener('click', () => mobileMenu.classList.add('is-open'));
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('is-open'));
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('is-open'));
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offset = 80;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ===== COUNTER ANIMATION =====
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = 'true';
+          const target = parseInt(entry.target.dataset.count);
+          const suffix = entry.target.innerHTML.includes('+') ? '<span class="accent">+</span>' : '';
+          let current = 0;
+          const increment = target / 40;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            entry.target.innerHTML = Math.floor(current) + suffix;
+          }, 30);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    // ===== HERO CANVAS - Network Animation =====
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: 0, y: 0 };
+    let animId;
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+    }
+
+    function createParticles() {
+      particles = [];
+      const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          r: Math.random() * 2 + 0.5,
+        });
+      }
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,107,0,0.25)';
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = p.x - particles[j].x;
+          const dy = p.y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255,107,0,${0.08 * (1 - dist / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      });
+      animId = requestAnimationFrame(drawParticles);
+    }
+
+    resizeCanvas();
+    createParticles();
+    drawParticles();
+    window.addEventListener('resize', () => { resizeCanvas(); createParticles(); });
+
+    // Stop animation when hero is out of view
+    const heroSection = document.getElementById('hero');
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) cancelAnimationFrame(animId);
+      else drawParticles();
+    }, { threshold: 0 });
+    heroObserver.observe(heroSection);
+  </script>
+</body>
+</html>
