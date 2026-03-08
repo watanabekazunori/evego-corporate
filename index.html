@@ -3,11 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EveGo Inc. — Forward Thinking</title>
-  <meta name="description" content="株式会社EveGo｜ワクワクを、前進の力に。1987年創業、飲食DX・営業戦略支援・イベントプロデュースを展開するTech駆動企業。">
+  <title>EveGo Inc. | 株式会社EveGo — ワクワクを前進の力に</title>
+  <meta name="description" content="株式会社EveGo（イブゴー）は1987年創業。飲食DXプラットフォーム「RestHub」、営業代行・アライアンス構築、イベントプロデュース、D.tail Kyotoを展開するテクノロジー駆動企業です。">
+  <meta name="keywords" content="EveGo, イブゴー, 株式会社EveGo, RestHub, 飲食DX, 営業代行, イベントプロデュース, D.tail Kyoto, 大阪, AI, DX">
+  <meta property="og:title" content="EveGo Inc. | 株式会社EveGo — ワクワクを前進の力に">
+  <meta property="og:description" content="1987年創業。飲食DX・営業戦略支援・イベントプロデュースを展開するTech駆動企業。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://evego.jp">
+  <meta property="og:site_name" content="EveGo Inc.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://evego.jp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "株式会社EveGo",
+    "alternateName": "EveGo Inc.",
+    "url": "https://evego.jp",
+    "foundingDate": "1987",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "大阪市住之江区",
+      "addressRegion": "大阪府",
+      "addressCountry": "JP"
+    },
+    "description": "飲食DX・営業戦略支援・イベントプロデュースを展開するテクノロジー駆動企業"
+  }
+  </script>
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,12 +43,13 @@
     :root {
       --accent: #FF6B00;
       --accent-dark: #E55F00;
+      --accent-light: #FF8C33;
       --dark: #0A0A0A;
       --dark-2: #111111;
       --dark-3: #1A1A1A;
       --white: #FFFFFF;
-      --gray-50: #FAFAFA;
-      --gray-100: #F5F5F5;
+      --gray-50: #F8F8F8;
+      --gray-100: #F0F0F0;
       --gray-200: #E5E5E5;
       --gray-300: #D4D4D4;
       --gray-400: #A3A3A3;
@@ -34,32 +63,54 @@
     }
 
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-    body { font-family: var(--jp); font-weight: 500; color: var(--dark); background: var(--white); line-height: 1.8; overflow-x: hidden; }
-    a { text-decoration: none; color: inherit; }
+    body { font-family: var(--jp); font-weight: 500; color: var(--dark); background: var(--white); line-height: 1.8; overflow-x: hidden; cursor: none; }
+    a { text-decoration: none; color: inherit; cursor: none; }
+    button { cursor: none; }
+    input, textarea, select { cursor: none; }
     img { max-width: 100%; display: block; }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     @media (min-width: 768px) { .container { padding: 0 48px; } }
     @media (min-width: 1200px) { .container { padding: 0 64px; } }
 
+    /* ===== MOUSE STALKER ===== */
+    .cursor-dot {
+      position: fixed; top: 0; left: 0; z-index: 99999;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 99998;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1.5px solid rgba(255,107,0,0.4);
+      pointer-events: none; transform: translate(-50%, -50%);
+      transition: width 0.3s var(--expo), height 0.3s var(--expo), border-color 0.3s;
+    }
+    .cursor-dot.is-hover { width: 14px; height: 14px; background: rgba(255,107,0,0.6); }
+    .cursor-ring.is-hover { width: 56px; height: 56px; border-color: rgba(255,107,0,0.2); }
+    @media (max-width: 1023px) { .cursor-dot, .cursor-ring { display: none; } body, a, button, input, textarea, select { cursor: auto; } }
+
     /* ===== LOADING SCREEN ===== */
     .loader {
       position: fixed; inset: 0; z-index: 99999;
-      background: var(--dark);
-      display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
     .loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-text {
+    .loader-logo {
       font-family: var(--en); font-weight: 900; font-size: 48px;
-      color: var(--white); letter-spacing: -0.03em;
+      letter-spacing: -0.03em;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s var(--expo), transform 0.8s var(--expo);
     }
-    .loader-text span { color: var(--accent); }
-    .loader-bar {
-      position: absolute; bottom: 0; left: 0; height: 3px;
-      background: var(--accent); animation: loaderBar 1.5s var(--expo) forwards;
-    }
-    @keyframes loaderBar { 0% { width: 0; } 100% { width: 100%; } }
+    .loader-logo.is-visible { opacity: 1; transform: translateY(0); }
+    .loader-logo.is-fading { opacity: 0; transition: opacity 1s ease; }
+    .loader-logo .eve { color: var(--dark); }
+    .loader-logo .go { color: var(--accent); }
+    .loader-logo .inc { color: var(--dark); font-weight: 700; font-size: 0.65em; }
 
     /* ===== SCROLL ANIMATIONS ===== */
     .reveal {
@@ -99,12 +150,21 @@
       padding: 24px 0; transition: all 0.4s var(--expo);
     }
     .nav.is-scrolled {
-      background: rgba(10,10,10,0.95); backdrop-filter: blur(24px);
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px); padding: 16px 0;
+      box-shadow: 0 1px 20px rgba(0,0,0,0.06);
     }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-family: var(--en); font-weight: 900; font-size: 26px; color: var(--white); letter-spacing: -0.03em; }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo {
+      font-family: var(--en); font-weight: 900; font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+    .nav-logo .eve { color: var(--white); transition: color 0.4s; }
+    .nav-logo .go { color: var(--accent); }
+    .nav-logo .inc { color: var(--white); font-weight: 700; font-size: 0.6em; transition: color 0.4s; }
+    .nav.is-scrolled .nav-logo .eve { color: var(--dark); }
+    .nav.is-scrolled .nav-logo .inc { color: var(--dark); }
+
     .nav-links { display: none; list-style: none; gap: 36px; align-items: center; }
     @media (min-width: 768px) { .nav-links { display: flex; } }
     .nav-links a {
@@ -112,21 +172,26 @@
       letter-spacing: 0.12em; text-transform: uppercase;
       color: rgba(255,255,255,0.6); transition: color 0.3s; position: relative;
     }
+    .nav.is-scrolled .nav-links a { color: var(--gray-500); }
     .nav-links a::after {
       content: ''; position: absolute; bottom: -6px; left: 0;
       width: 0; height: 2px; background: var(--accent);
       transition: width 0.4s var(--expo);
     }
     .nav-links a:hover { color: var(--white); }
+    .nav.is-scrolled .nav-links a:hover { color: var(--dark); }
     .nav-links a:hover::after { width: 100%; }
+
     .nav-cta {
       font-family: var(--en); font-size: 12px; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
-      background: var(--accent); color: var(--white);
+      background: var(--accent); color: var(--white) !important;
       padding: 12px 28px; border-radius: 0; transition: all 0.3s var(--expo);
       clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
     }
-    .nav-cta:hover { background: var(--white); color: var(--dark); transform: translateY(-2px); }
+    .nav-cta:hover { background: var(--dark) !important; color: var(--white) !important; transform: translateY(-2px); }
+    .nav.is-scrolled .nav-cta { background: var(--accent); color: var(--white) !important; }
+    .nav.is-scrolled .nav-cta:hover { background: var(--dark) !important; color: var(--white) !important; }
 
     .nav-mobile-toggle {
       display: flex; flex-direction: column; gap: 6px;
@@ -134,15 +199,17 @@
     }
     @media (min-width: 768px) { .nav-mobile-toggle { display: none; } }
     .nav-mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+    .nav.is-scrolled .nav-mobile-toggle span { background: var(--dark); }
 
     .mobile-menu {
-      position: fixed; inset: 0; background: var(--dark); z-index: 9999;
+      position: fixed; inset: 0; background: var(--white); z-index: 9999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
       opacity: 0; pointer-events: none; transition: opacity 0.4s;
     }
     .mobile-menu.is-open { opacity: 1; pointer-events: all; }
-    .mobile-menu a { font-family: var(--en); font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: 0.08em; text-transform: uppercase; }
-    .mobile-menu-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 36px; cursor: pointer; color: var(--white); }
+    .mobile-menu a { font-family: var(--en); font-size: 24px; font-weight: 800; color: var(--dark); letter-spacing: 0.08em; text-transform: uppercase; }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 36px; cursor: pointer; color: var(--dark); }
 
     /* ===== HERO ===== */
     .hero {
@@ -150,10 +217,8 @@
       position: relative; overflow: hidden;
       background: var(--dark);
     }
-
     .hero-canvas { position: absolute; inset: 0; z-index: 1; }
 
-    /* Diagonal geometric shapes */
     .hero-geo-1 {
       position: absolute; top: -10%; right: -5%;
       width: 55%; height: 120%;
@@ -176,18 +241,13 @@
       z-index: 2;
     }
 
-    /* Dot pattern overlay */
     .hero-dots {
       position: absolute; inset: 0; z-index: 4;
       background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.5;
+      background-size: 24px 24px; opacity: 0.5;
     }
 
-    .hero-content {
-      position: relative; z-index: 10;
-      padding: 140px 0 100px;
-    }
+    .hero-content { position: relative; z-index: 10; padding: 140px 0 100px; }
 
     .hero-eyebrow {
       font-family: var(--en); font-size: 11px; font-weight: 700;
@@ -195,9 +255,7 @@
       color: var(--accent); margin-bottom: 32px;
       display: inline-flex; align-items: center; gap: 16px;
     }
-    .hero-eyebrow::before {
-      content: ''; width: 40px; height: 2px; background: var(--accent);
-    }
+    .hero-eyebrow::before { content: ''; width: 40px; height: 2px; background: var(--accent); }
 
     .hero-heading {
       font-family: var(--en); font-weight: 900;
@@ -205,21 +263,29 @@
       line-height: 0.9; letter-spacing: -0.05em;
       color: var(--white); margin-bottom: 32px;
     }
-    .hero-heading .line-2 {
-      display: block;
-      -webkit-text-stroke: 2px var(--white);
-      color: transparent;
+    .hero-heading .letter {
+      display: inline-block; opacity: 0; transform: translateY(30px);
+      transition: opacity 0.5s ease, transform 0.5s var(--expo);
     }
-    .hero-heading .accent { color: var(--accent); -webkit-text-stroke: 0; }
+    .hero-heading .letter.is-visible { opacity: 1; transform: translateY(0); }
+    .hero-heading .line-2 { display: block; }
+    .hero-heading .accent-dot { color: var(--accent); }
 
     .hero-sub {
-      font-size: clamp(18px, 3vw, 28px); font-weight: 900;
-      color: var(--white); margin-bottom: 48px;
-      letter-spacing: 0.12em;
+      font-size: clamp(16px, 2.5vw, 24px); font-weight: 700;
+      color: rgba(255,255,255,0.85); margin-bottom: 48px;
+      letter-spacing: 0.08em; line-height: 1.8;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease 1.8s, transform 0.8s var(--expo) 1.8s;
     }
-    .hero-sub em { font-style: normal; color: var(--accent); }
+    .hero-sub.is-visible { opacity: 1; transform: translateY(0); }
 
-    .hero-cta-group { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .hero-cta-group {
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease 2.1s, transform 0.8s var(--expo) 2.1s;
+    }
+    .hero-cta-group.is-visible { opacity: 1; transform: translateY(0); }
 
     .btn-hero {
       display: inline-flex; align-items: center; gap: 12px;
@@ -245,7 +311,6 @@
     .btn-hero .arrow { transition: transform 0.3s var(--expo); }
     .btn-hero:hover .arrow { transform: translateX(6px); }
 
-    /* Scroll indicator */
     .hero-scroll {
       position: absolute; bottom: 40px; left: 50%;
       transform: translateX(-50%); z-index: 10;
@@ -253,8 +318,7 @@
     }
     .hero-scroll-text {
       font-family: var(--en); font-size: 10px; font-weight: 600;
-      letter-spacing: 0.2em; color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-transform: uppercase;
     }
     .hero-scroll-line {
       width: 1px; height: 48px; background: linear-gradient(to bottom, var(--accent), transparent);
@@ -267,15 +331,14 @@
 
     /* ===== NUMBERS BAND ===== */
     .numbers-band {
-      background: var(--dark); padding: 60px 0;
+      background: var(--white); padding: 60px 0;
       position: relative; overflow: hidden;
-      border-bottom: 3px solid var(--accent);
+      border-top: 3px solid var(--accent);
     }
     .numbers-band::before {
       content: ''; position: absolute; top: 0; right: 0;
       width: 30%; height: 100%; background: var(--accent);
-      transform: skewX(-12deg); transform-origin: top right;
-      opacity: 0.06;
+      transform: skewX(-12deg); transform-origin: top right; opacity: 0.04;
     }
     .numbers-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
@@ -284,32 +347,36 @@
     .number-item { text-align: center; }
     .number-value {
       font-family: var(--en); font-size: clamp(40px, 7vw, 72px);
-      font-weight: 900; color: var(--white); line-height: 1;
-      letter-spacing: -0.03em;
+      font-weight: 900; color: var(--dark); line-height: 1; letter-spacing: -0.03em;
     }
     .number-value .accent { color: var(--accent); }
     .number-label {
       font-family: var(--en); font-size: 11px; font-weight: 600;
       letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(255,255,255,0.4); margin-top: 12px;
+      color: var(--gray-400); margin-top: 12px;
     }
 
     /* ===== PHILOSOPHY / ABOUT ===== */
     .about {
       padding: 140px 0 120px;
       position: relative; overflow: hidden;
-      background: var(--white);
+      background: var(--gray-50);
     }
     .about::before {
       content: 'EVEGO'; position: absolute; top: 50%; right: -5%;
       transform: translateY(-50%);
       font-family: var(--en); font-size: clamp(120px, 20vw, 320px);
-      font-weight: 900; color: rgba(0,0,0,0.02);
+      font-weight: 900; color: rgba(255,107,0,0.05);
       white-space: nowrap; pointer-events: none; letter-spacing: -0.05em;
     }
+    /* Accent decoration circle */
+    .about::after {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 250px; height: 250px; border-radius: 50%;
+      border: 2px solid rgba(255,107,0,0.1); pointer-events: none;
+    }
     .about-grid {
-      display: grid; grid-template-columns: 1fr; gap: 64px;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center;
     }
     @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
 
@@ -319,25 +386,23 @@
       color: var(--accent); margin-bottom: 24px;
       display: flex; align-items: center; gap: 12px;
     }
-    .about-label::before {
-      content: ''; width: 24px; height: 2px; background: var(--accent);
-    }
+    .about-label::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
     .about-heading {
       font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
-      font-weight: 900; letter-spacing: -0.03em; line-height: 1.15;
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.2;
       margin-bottom: 32px;
     }
     .about-heading .accent { color: var(--accent); }
-    .about-text {
-      font-size: 15px; line-height: 2.2; color: var(--gray-600);
+    .about-heading .meets {
+      display: block; font-size: 0.6em; color: var(--gray-400);
+      letter-spacing: 0.05em; margin: 8px 0;
     }
+    .about-text { font-size: 15px; line-height: 2.2; color: var(--gray-600); }
     .about-text strong { color: var(--dark); font-weight: 700; }
 
-    .about-visual {
-      position: relative; display: flex; flex-direction: column; gap: 24px;
-    }
+    .about-visual { position: relative; display: flex; flex-direction: column; gap: 24px; }
     .about-card {
-      background: var(--gray-50); border-radius: 0; padding: 36px;
+      background: var(--white); border-radius: 0; padding: 36px;
       position: relative; overflow: hidden;
       border-left: 4px solid var(--accent);
       transition: all 0.4s var(--expo);
@@ -348,27 +413,27 @@
     }
     .about-card-num {
       font-family: var(--en); font-size: 64px; font-weight: 900;
-      color: rgba(0,0,0,0.04); position: absolute; top: 8px; right: 16px; line-height: 1;
+      color: rgba(255,107,0,0.1); position: absolute; top: 8px; right: 16px; line-height: 1;
     }
     .about-card-title {
       font-family: var(--en); font-size: 16px; font-weight: 800;
-      letter-spacing: 0.02em; margin-bottom: 8px;
+      letter-spacing: 0.02em; margin-bottom: 8px; color: var(--dark);
     }
     .about-card-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
 
     /* ===== MARQUEE ===== */
     .marquee-section {
       padding: 48px 0; overflow: hidden;
-      background: var(--dark);
-      position: relative;
+      background: var(--white); position: relative;
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
     }
     .marquee-section::before,
     .marquee-section::after {
-      content: ''; position: absolute; top: 0; width: 30%; height: 100%;
-      z-index: 2;
+      content: ''; position: absolute; top: 0; width: 15%; height: 100%; z-index: 2;
     }
-    .marquee-section::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
-    .marquee-section::after { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
+    .marquee-section::before { left: 0; background: linear-gradient(to right, var(--white), transparent); }
+    .marquee-section::after { right: 0; background: linear-gradient(to left, var(--white), transparent); }
     .marquee-track {
       display: flex; gap: 48px;
       animation: marqueeScroll 20s linear infinite;
@@ -377,12 +442,14 @@
     .marquee-item {
       font-family: var(--en); font-size: clamp(36px, 6vw, 64px);
       font-weight: 900; white-space: nowrap; letter-spacing: -0.02em;
-      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.12);
+      color: transparent; -webkit-text-stroke: 1.5px var(--gray-300);
+      transition: color 0.3s;
     }
+    .marquee-item:hover { color: var(--accent); -webkit-text-stroke: 0; }
     .marquee-item .sep { color: var(--accent); -webkit-text-stroke: 0; margin: 0 24px; font-size: 0.6em; }
     @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* ===== SERVICES - BENTO GRID ===== */
+    /* ===== SERVICES ===== */
     .services {
       padding: 140px 0; background: var(--gray-50);
       position: relative;
@@ -391,6 +458,12 @@
       content: ''; position: absolute; top: 0; left: 0;
       width: 100%; height: 6px;
       background: linear-gradient(to right, var(--accent), var(--accent) 30%, transparent 30%);
+    }
+    /* Accent decoration */
+    .services::after {
+      content: ''; position: absolute; bottom: -100px; right: -100px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: rgba(255,107,0,0.03); pointer-events: none;
     }
     .services-header { margin-bottom: 72px; }
     .section-tag {
@@ -407,59 +480,56 @@
     .services-heading .accent { color: var(--accent); }
 
     .bento {
-      display: grid; grid-template-columns: 1fr; gap: 20px;
+      display: grid; grid-template-columns: 1fr; gap: 24px;
     }
     @media (min-width: 768px) {
       .bento { grid-template-columns: repeat(2, 1fr); }
     }
-    @media (min-width: 1024px) {
-      .bento { grid-template-columns: repeat(12, 1fr); }
-      .bento-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-      .bento-item:nth-child(2) { grid-column: span 5; }
-      .bento-item:nth-child(3) { grid-column: span 5; }
-      .bento-item:nth-child(4) { grid-column: span 12; }
-    }
 
     .bento-item {
       position: relative; overflow: hidden;
-      background: var(--white);
-      padding: 40px; min-height: 260px;
-      display: flex; flex-direction: column; justify-content: space-between;
-      transition: all 0.5s var(--expo);
-      cursor: pointer;
+      background: var(--white); min-height: 420px;
+      display: flex; flex-direction: column;
+      transition: all 0.5s var(--expo); cursor: pointer;
     }
     .bento-item::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 4px; height: 0; background: var(--accent);
-      transition: height 0.5s var(--expo);
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 4px; background: var(--accent);
+      transition: width 0.5s var(--expo); z-index: 5;
     }
-    .bento-item:hover::before { height: 100%; }
+    .bento-item:hover::before { width: 100%; }
     .bento-item:hover {
       transform: translateY(-6px);
       box-shadow: 0 24px 64px rgba(0,0,0,0.1);
     }
-    @media (min-width: 1024px) {
-      .bento-item:nth-child(1) { padding: 48px; }
-      .bento-item:nth-child(4) {
-        background: var(--dark); color: var(--white);
-        flex-direction: row; align-items: center; gap: 48px;
-      }
-      .bento-item:nth-child(4)::before { background: var(--accent); width: 100%; height: 4px; top: auto; bottom: 0; left: 0; }
-      .bento-item:nth-child(4):hover::before { width: 100%; height: 4px; }
-      .bento-item:nth-child(4) .bento-desc { color: rgba(255,255,255,0.6); }
+
+    .bento-img {
+      width: 100%; height: 200px; overflow: hidden; position: relative;
+    }
+    .bento-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s var(--expo), filter 0.6s ease;
+    }
+    .bento-item:hover .bento-img img {
+      transform: scale(1.08);
+      filter: brightness(1.05) saturate(1.1);
+    }
+
+    .bento-content {
+      padding: 32px; flex: 1;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
 
     .bento-num {
-      font-family: var(--en); font-size: 100px; font-weight: 900;
-      color: rgba(0,0,0,0.03); position: absolute; top: -10px; right: 16px; line-height: 1;
-      pointer-events: none;
+      font-family: var(--en); font-size: 80px; font-weight: 900;
+      color: rgba(255,107,0,0.08); position: absolute; top: 190px; right: 16px; line-height: 1;
+      pointer-events: none; z-index: 3;
     }
-    .bento-item:nth-child(4) .bento-num { color: rgba(255,255,255,0.04); }
 
     .bento-tag {
       font-family: var(--en); font-size: 10px; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 16px;
+      color: var(--accent); margin-bottom: 12px;
       display: inline-flex; align-items: center; gap: 8px;
     }
     .bento-tag::before {
@@ -468,21 +538,21 @@
     }
 
     .bento-title {
-      font-family: var(--en); font-size: clamp(22px, 3vw, 32px);
+      font-family: var(--en); font-size: clamp(22px, 3vw, 28px);
       font-weight: 900; letter-spacing: -0.02em;
-      margin-bottom: 16px; line-height: 1.15;
+      margin-bottom: 12px; line-height: 1.15;
     }
     .bento-desc { font-size: 13px; line-height: 1.9; color: var(--gray-500); }
     .bento-features {
-      list-style: none; margin-top: 24px;
-      display: flex; flex-direction: column; gap: 12px;
+      list-style: none; margin-top: 16px;
+      display: flex; flex-direction: column; gap: 8px;
     }
     .bento-features li {
       font-size: 13px; color: var(--gray-600);
       display: flex; align-items: center; gap: 12px;
     }
     .bento-features li::before {
-      content: ''; width: 20px; height: 2px;
+      content: ''; width: 16px; height: 2px;
       background: var(--accent); flex-shrink: 0;
     }
 
@@ -491,33 +561,31 @@
       display: flex; align-items: center; justify-content: center;
       background: var(--gray-50); transition: all 0.3s var(--expo);
       clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-      align-self: flex-end;
+      align-self: flex-end; margin-top: 16px;
     }
     .bento-item:hover .bento-arrow { background: var(--accent); }
     .bento-item:hover .bento-arrow svg { stroke: white; }
-    .bento-item:nth-child(4) .bento-arrow { background: rgba(255,255,255,0.1); }
-    .bento-item:nth-child(4):hover .bento-arrow { background: var(--accent); }
 
     /* ===== SCOPE SECTION ===== */
     .scope {
-      padding: 140px 0; background: var(--dark);
+      padding: 140px 0; background: var(--white);
       position: relative; overflow: hidden;
     }
     .scope::before {
       content: ''; position: absolute; top: -50px; right: -100px;
-      width: 500px; height: 500px; border: 2px solid rgba(255,107,0,0.1);
+      width: 500px; height: 500px; border: 2px solid rgba(255,107,0,0.06);
       border-radius: 50%; pointer-events: none;
     }
     .scope::after {
       content: ''; position: absolute; bottom: -80px; left: -80px;
-      width: 300px; height: 300px; border: 2px solid rgba(255,107,0,0.06);
+      width: 300px; height: 300px; border: 2px solid rgba(255,107,0,0.04);
       border-radius: 50%; pointer-events: none;
     }
 
     .scope-header { margin-bottom: 80px; }
     .scope-heading {
       font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
-      font-weight: 900; letter-spacing: -0.03em; color: var(--white); line-height: 1.1;
+      font-weight: 900; letter-spacing: -0.03em; color: var(--dark); line-height: 1.1;
     }
     .scope-heading .accent { color: var(--accent); }
 
@@ -528,28 +596,26 @@
 
     .scope-item {
       padding: 48px 0; position: relative;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid var(--gray-200);
       transition: all 0.4s var(--expo);
     }
     @media (min-width: 768px) { .scope-item { padding: 48px 40px; } }
-    .scope-item:hover { background: rgba(255,255,255,0.02); }
+    .scope-item:hover { background: var(--gray-50); }
 
     .scope-item-num {
       font-family: var(--en); font-size: 48px; font-weight: 900;
       color: var(--accent); line-height: 1; margin-bottom: 20px;
-      letter-spacing: -0.03em; opacity: 0.8;
+      letter-spacing: -0.03em; opacity: 0.3;
     }
     .scope-item-en {
       font-family: var(--en); font-size: 20px; font-weight: 800;
-      color: var(--white); letter-spacing: -0.01em; margin-bottom: 4px;
+      color: var(--dark); letter-spacing: -0.01em; margin-bottom: 4px;
     }
     .scope-item-jp {
-      font-size: 12px; color: rgba(255,255,255,0.35);
+      font-size: 12px; color: var(--gray-400);
       letter-spacing: 0.06em; margin-bottom: 16px;
     }
-    .scope-item-desc {
-      font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.5);
-    }
+    .scope-item-desc { font-size: 13px; line-height: 1.9; color: var(--gray-500); }
     .scope-item-line {
       position: absolute; top: 0; left: 0;
       width: 0; height: 2px; background: var(--accent);
@@ -559,14 +625,20 @@
 
     /* ===== COMPANY ===== */
     .company {
-      padding: 140px 0; background: var(--white);
+      padding: 140px 0; background: var(--gray-50);
       position: relative;
     }
     .company::before {
       content: ''; position: absolute; top: 0; right: 0;
       width: 40%; height: 100%;
-      background: var(--gray-50);
+      background: var(--white);
       clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    /* Accent dot decoration */
+    .company::after {
+      content: ''; position: absolute; top: 80px; left: 60px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); opacity: 0.3;
     }
 
     .company-inner { position: relative; z-index: 2; }
@@ -586,8 +658,7 @@
     .info-row {
       display: grid; grid-template-columns: 120px 1fr;
       gap: 24px; padding: 24px 0;
-      border-bottom: 1px solid var(--gray-200);
-      align-items: start;
+      border-bottom: 1px solid var(--gray-200); align-items: start;
     }
     @media (min-width: 768px) { .info-row { grid-template-columns: 140px 1fr; } }
     .info-label {
@@ -607,7 +678,7 @@
     .tl-item::before {
       content: ''; position: absolute; left: -44px; top: 4px;
       width: 12px; height: 12px; border-radius: 50%;
-      background: var(--gray-300); border: 3px solid var(--white);
+      background: var(--gray-300); border: 3px solid var(--gray-50);
       transition: all 0.3s;
     }
     .tl-item:last-child::before { background: var(--accent); }
@@ -616,72 +687,120 @@
       font-family: var(--en); font-size: 13px; font-weight: 800;
       color: var(--accent); letter-spacing: 0.06em;
     }
+    .tl-subtitle {
+      font-family: var(--en); font-size: 11px; font-weight: 700;
+      color: var(--gray-400); letter-spacing: 0.04em; margin-left: 8px;
+    }
     .tl-text { font-size: 13px; color: var(--gray-500); margin-top: 4px; line-height: 1.7; }
     .tl-text strong { color: var(--dark); }
 
     /* ===== CONTACT ===== */
     .contact {
-      padding: 140px 0 100px;
-      background: var(--accent);
+      padding: 120px 0 100px;
+      background: var(--white);
       position: relative; overflow: hidden;
-      color: var(--white);
     }
     .contact::before {
-      content: ''; position: absolute; top: -80px; right: -100px;
-      width: 50%; height: 140%;
-      background: rgba(0,0,0,0.12);
-      transform: skewX(-12deg);
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 6px;
+      background: linear-gradient(to right, var(--accent) 0%, var(--accent) 20%, transparent 20%);
     }
     .contact::after {
-      content: ''; position: absolute; bottom: -60px; left: -50px;
-      width: 30%; height: 80%;
-      background: rgba(0,0,0,0.06);
-      transform: skewX(-12deg);
+      content: ''; position: absolute; bottom: -120px; right: -120px;
+      width: 350px; height: 350px; border-radius: 50%;
+      border: 2px solid rgba(255,107,0,0.06); pointer-events: none;
     }
 
-    .contact-inner {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
-    }
-    @media (min-width: 768px) { .contact-inner { grid-template-columns: 1fr auto; } }
-
+    .contact-inner { position: relative; z-index: 2; }
+    .contact-header { margin-bottom: 60px; }
     .contact-heading {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 900; line-height: 1.3;
-      letter-spacing: 0.02em;
+      font-family: var(--en); font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.1;
+      margin-bottom: 16px;
     }
-    .contact-sub {
-      font-size: 14px; margin-top: 16px; line-height: 1.9;
-      opacity: 0.8;
-    }
+    .contact-heading .accent { color: var(--accent); }
+    .contact-sub { font-size: 15px; color: var(--gray-500); line-height: 1.9; }
 
-    .contact-btn {
-      display: inline-flex; align-items: center; gap: 16px;
-      font-family: var(--en); font-size: 16px; font-weight: 800;
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr; gap: 64px;
+    }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .contact-info-block { display: flex; flex-direction: column; gap: 24px; }
+    .contact-info-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 24px; background: var(--gray-50); transition: all 0.3s var(--expo);
+    }
+    .contact-info-item:hover { transform: translateX(4px); }
+    .contact-info-icon {
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: var(--accent); color: var(--white); flex-shrink: 0;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+    }
+    .contact-info-label {
+      font-family: var(--en); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400);
+    }
+    .contact-info-value { font-size: 14px; color: var(--dark); font-weight: 600; margin-top: 2px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 767px) { .form-row { grid-template-columns: 1fr; } }
+    .form-label {
+      font-family: var(--en); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400);
+    }
+    .form-label .required {
+      color: var(--accent); margin-left: 4px; font-size: 9px;
+    }
+    .form-input, .form-textarea {
+      font-family: var(--jp); font-size: 14px; padding: 14px 16px;
+      border: 1.5px solid var(--gray-200); background: var(--white);
+      color: var(--dark); outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none; border-radius: 0;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255,107,0,0.08);
+    }
+    .form-textarea { min-height: 140px; resize: vertical; }
+    .form-submit {
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+      font-family: var(--en); font-size: 14px; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
-      background: var(--white); color: var(--dark);
-      padding: 22px 56px; border: none; cursor: pointer;
+      background: var(--accent); color: var(--white);
+      padding: 18px 48px; border: none; cursor: pointer;
       transition: all 0.4s var(--expo);
-      clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
-      white-space: nowrap;
+      clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+      align-self: flex-start;
     }
-    .contact-btn:hover {
-      background: var(--dark); color: var(--white);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    .form-submit:hover {
+      background: var(--dark); transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
-    .contact-btn .arrow { transition: transform 0.3s var(--expo); }
-    .contact-btn:hover .arrow { transform: translateX(8px); }
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .form-submit .arrow { transition: transform 0.3s var(--expo); }
+    .form-submit:hover .arrow { transform: translateX(6px); }
+    .form-success {
+      display: none; padding: 24px; background: rgba(255,107,0,0.06);
+      border-left: 4px solid var(--accent); font-size: 14px; color: var(--dark);
+    }
+    .form-success.is-visible { display: block; }
 
     /* ===== FOOTER ===== */
     .footer {
-      background: var(--dark); color: var(--white);
+      background: var(--gray-50); color: var(--dark);
       padding: 80px 0 40px; position: relative;
+      border-top: 1px solid var(--gray-200);
     }
     .footer-top {
       display: grid; grid-template-columns: 1fr; gap: 48px;
       padding-bottom: 60px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid var(--gray-200);
     }
     @media (min-width: 768px) { .footer-top { grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 48px; } }
 
@@ -689,20 +808,22 @@
       font-family: var(--en); font-weight: 900; font-size: 28px;
       letter-spacing: -0.03em;
     }
-    .footer-brand-name span { color: var(--accent); }
+    .footer-brand-name .eve { color: var(--dark); }
+    .footer-brand-name .go { color: var(--accent); }
+    .footer-brand-name .inc { color: var(--dark); font-weight: 700; font-size: 0.6em; }
     .footer-tagline {
       font-family: var(--en); font-size: 14px; font-weight: 500;
-      color: rgba(255,255,255,0.35); margin-top: 16px;
+      color: var(--gray-400); margin-top: 16px;
       font-style: italic; letter-spacing: 0.03em;
     }
     .footer-col-title {
       font-family: var(--en); font-size: 10px; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.25); margin-bottom: 24px;
+      color: var(--gray-400); margin-bottom: 24px;
     }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
     .footer-col a {
-      font-size: 13px; color: rgba(255,255,255,0.5);
+      font-size: 13px; color: var(--gray-500);
       transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
     }
     .footer-col a:hover { color: var(--accent); transform: translateX(4px); }
@@ -719,37 +840,55 @@
     @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
     .footer-copyright {
       font-family: var(--en); font-size: 11px; font-weight: 500;
-      letter-spacing: 0.25em; color: rgba(255,255,255,0.2);
+      letter-spacing: 0.25em; color: var(--gray-400);
     }
     .footer-legal { display: flex; gap: 24px; }
-    .footer-legal a { font-size: 11px; color: rgba(255,255,255,0.2); transition: color 0.3s; }
-    .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+    .footer-legal a { font-size: 11px; color: var(--gray-400); transition: color 0.3s; }
+    .footer-legal a:hover { color: var(--accent); }
 
     /* ===== FLOATING SIDE ELEMENTS ===== */
     .side-label {
       position: fixed; right: 20px; top: 50%; z-index: 100;
       transform: translateY(-50%) rotate(90deg);
       font-family: var(--en); font-size: 10px; font-weight: 600;
-      letter-spacing: 0.3em; color: rgba(255,255,255,0.2);
+      letter-spacing: 0.3em; color: var(--gray-300);
       text-transform: uppercase; display: none;
     }
     @media (min-width: 1024px) { .side-label { display: block; } }
 
-    /* ===== RESPONSIVE ADJUSTMENTS ===== */
+    /* ===== ACCENT DECORATIONS ===== */
+    .accent-line {
+      width: 60px; height: 3px; background: var(--accent);
+      margin: 24px 0;
+    }
+    @keyframes floatAccent {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 767px) {
       .hero-geo-1 { width: 80%; opacity: 0.3; }
       .hero-geo-2 { display: none; }
       .hero-geo-3 { display: none; }
-      .bento-item:nth-child(4) { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Mouse Stalker -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
   <!-- Loading Screen -->
   <div class="loader" id="loader">
-    <div class="loader-text">Eve<span>Go</span></div>
-    <div class="loader-bar"></div>
+    <div class="loader-logo" id="loaderLogo">
+      <span class="eve">Eve</span><span class="go">Go</span> <span class="inc">Inc.</span>
+    </div>
   </div>
 
   <!-- Progress Bar -->
@@ -761,7 +900,7 @@
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="container nav-inner">
-      <a href="#" class="nav-logo">Eve<span>Go</span></a>
+      <a href="#" class="nav-logo"><span class="eve">Eve</span><span class="go">Go</span> <span class="inc">Inc.</span></a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
@@ -794,15 +933,15 @@
     <div class="hero-dots"></div>
 
     <div class="container hero-content">
-      <div class="hero-eyebrow reveal">Since 1987 — Osaka, Japan</div>
-      <h1 class="hero-heading reveal reveal-delay-1">
-        FORWARD<br>
-        <span class="line-2">THINK<span class="accent">ING</span></span>
+      <div class="hero-eyebrow">Since 1987 — Osaka, Japan</div>
+      <h1 class="hero-heading" id="heroHeading">
+        <span class="line-1" id="heroLine1"></span>
+        <span class="line-2" id="heroLine2"></span>
       </h1>
-      <p class="hero-sub reveal reveal-delay-2">
-        <em>ワクワク</em>を、前進の力に。
+      <p class="hero-sub" id="heroSub">
+        ワクワクを前進の力に。想いを動かし新しい"カタチ"を創る。
       </p>
-      <div class="hero-cta-group reveal reveal-delay-3">
+      <div class="hero-cta-group" id="heroCta">
         <a href="#contact" class="btn-hero btn-hero--primary">
           Get in Touch <span class="arrow">&rarr;</span>
         </a>
@@ -849,8 +988,9 @@
         <div>
           <div class="about-label reveal">Our Philosophy</div>
           <h2 class="about-heading reveal reveal-delay-1">
-            <span class="accent">High-Tech</span> meets<br>
-            <span class="accent">High-Touch</span>.
+            <span class="accent">High-Tech</span><br>
+            <span class="meets">meets</span>
+            <span class="accent">High-Touch.</span>
           </h2>
           <p class="about-text reveal reveal-delay-2">
             1987年、大阪で始まったイベントプロデュース事業。<br>
@@ -895,7 +1035,7 @@
     </div>
   </section>
 
-  <!-- ===== SERVICES - BENTO GRID ===== -->
+  <!-- ===== SERVICES ===== -->
   <section class="services" id="services">
     <div class="container">
       <div class="services-header">
@@ -904,69 +1044,90 @@
       </div>
 
       <div class="bento">
-        <!-- RestHub - Large -->
+        <!-- RestHub -->
         <div class="bento-item reveal-scale">
-          <div class="bento-num">01</div>
-          <div>
-            <div class="bento-tag">DX Platform</div>
-            <h3 class="bento-title">RestHub</h3>
-            <p class="bento-desc">飲食業界に特化したDXプラットフォーム。独自のデータ基盤により、店舗運営・顧客分析・マーケティングをワンストップで支援します。</p>
-            <ul class="bento-features">
-              <li>独自データ基盤による顧客インサイト</li>
-              <li>AI活用の需要予測・在庫最適化</li>
-              <li>統合マーケティングダッシュボード</li>
-              <li>リアルタイム経営分析レポート</li>
-            </ul>
+          <div class="bento-img">
+            <img src="https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?w=800&auto=format&fit=crop&q=80" alt="RestHub - 飲食DXプラットフォーム" loading="lazy" decoding="async" width="800" height="400">
           </div>
-          <div class="bento-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
+          <div class="bento-num">01</div>
+          <div class="bento-content">
+            <div>
+              <div class="bento-tag">DX Platform</div>
+              <h3 class="bento-title">RestHub</h3>
+              <p class="bento-desc">飲食業界に特化したDXプラットフォーム。マーケティング診断から経営最適化まで、データドリブンな成長を支援します。</p>
+              <ul class="bento-features">
+                <li>マーケティング診断ツール「Tonarino」運営</li>
+                <li>独自データ基盤による顧客インサイト</li>
+                <li>AI活用の需要予測・経営最適化</li>
+                <li>統合マーケティングダッシュボード</li>
+                <li>リアルタイム経営分析レポート</li>
+              </ul>
+            </div>
+            <div class="bento-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
 
         <!-- Sales Agency -->
         <div class="bento-item reveal-scale reveal-delay-1">
-          <div class="bento-num">02</div>
-          <div>
-            <div class="bento-tag">Strategic Sales</div>
-            <h3 class="bento-title">Sales Agency</h3>
-            <p class="bento-desc">インテントデータを活用した営業代行・アライアンス構築。確度の高いリード獲得を実現します。</p>
+          <div class="bento-img">
+            <img src="https://images.unsplash.com/photo-1588600878108-578307a3cc9d?w=800&auto=format&fit=crop&q=80" alt="Sales Agency - 営業戦略支援" loading="lazy" decoding="async" width="800" height="400">
           </div>
-          <div class="bento-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
+          <div class="bento-num">02</div>
+          <div class="bento-content">
+            <div>
+              <div class="bento-tag">Strategic Sales</div>
+              <h3 class="bento-title">Sales Agency</h3>
+              <p class="bento-desc">インテントデータを活用した営業代行・アライアンス構築。リードの獲得から受注まで専属担当者がワンストップで支援。</p>
+            </div>
+            <div class="bento-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
 
         <!-- Event Produce -->
         <div class="bento-item reveal-scale reveal-delay-2">
-          <div class="bento-num">03</div>
-          <div>
-            <div class="bento-tag">Experience</div>
-            <h3 class="bento-title">Event Produce</h3>
-            <p class="bento-desc">1987年から継承するプロフェッショナルなイベント企画・演出力。伝統と革新の融合。</p>
+          <div class="bento-img">
+            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1169&auto=format&fit=crop" alt="Event Produce - イベントプロデュース" loading="lazy" decoding="async" width="800" height="400">
           </div>
-          <div class="bento-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
+          <div class="bento-num">03</div>
+          <div class="bento-content">
+            <div>
+              <div class="bento-tag">Experience</div>
+              <h3 class="bento-title">Event Produce</h3>
+              <p class="bento-desc">1987年から継承するプロフェッショナルなイベント企画・演出力。伝統と革新の融合で、記憶に残る体験を創造します。</p>
+            </div>
+            <div class="bento-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
 
-        <!-- D.tail Kyoto - Wide -->
+        <!-- D.tail Kyoto -->
         <div class="bento-item reveal-scale reveal-delay-3">
-          <div class="bento-num">04</div>
-          <div>
-            <div class="bento-tag">Lifestyle</div>
-            <h3 class="bento-title">D.tail Kyoto</h3>
-            <p class="bento-desc">プロフェッショナルのためのオーダースーツブランド。京都の美意識と現代のテーラリングを融合し、あなただけの一着を仕立てます。</p>
+          <div class="bento-img">
+            <img src="https://images.unsplash.com/photo-1633655442432-620aa55d7ac1?w=800&auto=format&fit=crop&q=80" alt="D.tail Kyoto - オーダースーツ" loading="lazy" decoding="async" width="800" height="400">
           </div>
-          <div class="bento-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
-            </svg>
+          <div class="bento-num">04</div>
+          <div class="bento-content">
+            <div>
+              <div class="bento-tag">Lifestyle</div>
+              <h3 class="bento-title">D.tail Kyoto</h3>
+              <p class="bento-desc">プロフェッショナルのためのオーダースーツブランド。京都の美意識と現代のテーラリングを融合し、あなただけの一着を仕立てます。</p>
+            </div>
+            <div class="bento-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -977,7 +1138,7 @@
   <section class="scope" id="scope">
     <div class="container">
       <div class="scope-header">
-        <div class="section-tag reveal" style="color:var(--accent);">Business Scope</div>
+        <div class="section-tag reveal">Business Scope</div>
         <h2 class="scope-heading reveal reveal-delay-1">Four Pillars of <span class="accent">Growth</span>.</h2>
       </div>
 
@@ -1026,7 +1187,7 @@
         <div class="info-table">
           <div class="info-row reveal">
             <div class="info-label">Company</div>
-            <div class="info-value"><strong>株式会社EveGo</strong><br>EveGo Inc.</div>
+            <div class="info-value"><strong>株式会社EveGo</strong>（英字社名：EveGo Inc.）<br><span style="font-size:12px;color:var(--gray-400);">旧：株式会社イベントグループ大阪 / 1987年創業</span></div>
           </div>
           <div class="info-row reveal reveal-delay-1">
             <div class="info-label">Founded</div>
@@ -1037,14 +1198,10 @@
             <div class="info-value">代表取締役 CEO<br><strong>吉井 宏</strong></div>
           </div>
           <div class="info-row reveal reveal-delay-2">
-            <div class="info-label">COO</div>
-            <div class="info-value">取締役 COO<br><strong>伊達 裕司</strong></div>
-          </div>
-          <div class="info-row reveal reveal-delay-2">
             <div class="info-label">Capital</div>
             <div class="info-value">1,000万円</div>
           </div>
-          <div class="info-row reveal reveal-delay-3">
+          <div class="info-row reveal reveal-delay-2">
             <div class="info-label">Address</div>
             <div class="info-value">〒559-0011<br>大阪市住之江区粉浜3丁目6-20</div>
           </div>
@@ -1056,32 +1213,20 @@
 
         <div class="timeline">
           <div class="tl-item reveal">
-            <div class="tl-year">1987</div>
+            <div class="tl-year">1987 <span class="tl-subtitle">— Founded</span></div>
             <div class="tl-text">株式会社イベントグループ大阪として設立。<br>イベントプロデュース事業を開始。</div>
           </div>
           <div class="tl-item reveal reveal-delay-1">
             <div class="tl-year">1990s</div>
-            <div class="tl-text">大阪を拠点に企業イベント・展示会の企画運営実績を拡大。</div>
-          </div>
-          <div class="tl-item reveal reveal-delay-1">
-            <div class="tl-year">2000s</div>
-            <div class="tl-text">飲食業界との連携を深め、新たな事業領域へ進出。</div>
+            <div class="tl-text">大阪を拠点に行政や企業イベント・パーティーなどの企画運営実績を拡大。</div>
           </div>
           <div class="tl-item reveal reveal-delay-2">
-            <div class="tl-year">2010s</div>
-            <div class="tl-text">テクノロジー活用を本格化。データ駆動型ビジネスモデルへの転換を開始。</div>
-          </div>
-          <div class="tl-item reveal reveal-delay-2">
-            <div class="tl-year">2020</div>
-            <div class="tl-text">飲食DXプラットフォーム「RestHub」の開発に着手。</div>
+            <div class="tl-year">2024 <span class="tl-subtitle">— Pivot</span></div>
+            <div class="tl-text"><strong>DX・テクノロジー領域への本格展開</strong><br>飲食DXプラットフォーム「RestHub」事業を開始。<br>インテント営業代行も拡大。<br>D.tail Kyotoブランドをローンチ。</div>
           </div>
           <div class="tl-item reveal reveal-delay-3">
-            <div class="tl-year">2024</div>
-            <div class="tl-text">営業戦略支援事業を開始。D.tail Kyotoブランドをローンチ。</div>
-          </div>
-          <div class="tl-item reveal reveal-delay-4">
-            <div class="tl-year">2025</div>
-            <div class="tl-text"><strong>株式会社EveGoへ商号変更。</strong><br>「Forward Thinking」を掲げ、新たな章へ。</div>
+            <div class="tl-year">2025 <span class="tl-subtitle">— Rebrand</span></div>
+            <div class="tl-text"><strong>株式会社EveGoへ商号変更（リブランディング）</strong><br>「ワクワク（Eve）を前進（Go）の力に」という哲学を体現した新たな出発。</div>
           </div>
         </div>
       </div>
@@ -1091,14 +1236,66 @@
   <!-- ===== CONTACT ===== -->
   <section class="contact" id="contact">
     <div class="container contact-inner">
-      <div class="reveal">
-        <div class="contact-heading">未来を、語り合いましょう。</div>
-        <p class="contact-sub">事業のご相談、パートナーシップのお問い合わせなど、<br>お気軽にご連絡ください。</p>
+      <div class="contact-header">
+        <div class="section-tag reveal">Get in Touch</div>
+        <h2 class="contact-heading reveal reveal-delay-1">Contact <span class="accent">Us</span>.</h2>
+        <p class="contact-sub reveal reveal-delay-2">事業のご相談、パートナーシップのお問い合わせなど、お気軽にご連絡ください。</p>
       </div>
-      <div class="reveal reveal-delay-2">
-        <a href="mailto:info@evego.co.jp" class="contact-btn">
-          Contact Us <span class="arrow">&rarr;</span>
-        </a>
+
+      <div class="contact-grid">
+        <div class="contact-info-block reveal">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">info@evego.co.jp</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Address</div>
+              <div class="contact-info-value">大阪市住之江区粉浜3丁目6-20</div>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form reveal reveal-delay-1" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Company</label>
+              <input type="text" class="form-input" name="company" placeholder="会社名">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Name <span class="required">*</span></label>
+              <input type="text" class="form-input" name="name" placeholder="お名前" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email <span class="required">*</span></label>
+              <input type="email" class="form-input" name="email" placeholder="メールアドレス" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-input" name="phone" placeholder="電話番号">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message <span class="required">*</span></label>
+            <textarea class="form-textarea" name="message" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="formSubmit">
+            Send Message <span class="arrow">&rarr;</span>
+          </button>
+          <div class="form-success" id="formSuccess">
+            お問い合わせありがとうございます。内容を確認の上、担当者よりご連絡いたします。
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1108,7 +1305,7 @@
     <div class="container">
       <div class="footer-top">
         <div>
-          <div class="footer-brand-name">Eve<span>Go</span></div>
+          <div class="footer-brand-name"><span class="eve">Eve</span><span class="go">Go</span> <span class="inc">Inc.</span></div>
           <div class="footer-tagline">Excitement into Forward Momentum.</div>
         </div>
         <div class="footer-col">
@@ -1123,8 +1320,9 @@
         <div class="footer-col">
           <div class="footer-col-title">Company</div>
           <ul>
-            <li><a href="#company">About Us</a></li>
-            <li><a href="#company">Leadership</a></li>
+            <li><a href="#about">Philosophy</a></li>
+            <li><a href="#scope">Business Scope</a></li>
+            <li><a href="#company">Company Profile</a></li>
             <li><a href="#company">History</a></li>
           </ul>
         </div>
@@ -1132,7 +1330,7 @@
           <div class="footer-col-title">Connect</div>
           <ul>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#">Careers</a></li>
+            <li><a href="mailto:info@evego.co.jp">Email</a></li>
           </ul>
         </div>
       </div>
@@ -1149,9 +1347,98 @@
   <script>
     // ===== LOADER =====
     window.addEventListener('load', () => {
+      const logo = document.getElementById('loaderLogo');
+      const loader = document.getElementById('loader');
+
+      // Step 1: Logo slides up and appears
+      setTimeout(() => logo.classList.add('is-visible'), 200);
+
+      // Step 2: Logo fades out
+      setTimeout(() => logo.classList.add('is-fading'), 1800);
+
+      // Step 3: White background fades out
       setTimeout(() => {
-        document.getElementById('loader').classList.add('is-done');
-      }, 1800);
+        loader.classList.add('is-done');
+        // Trigger hero animations after loader
+        startHeroAnimation();
+      }, 2600);
+    });
+
+    // ===== HERO LETTER ANIMATION =====
+    let heroAnimated = false;
+    function startHeroAnimation() {
+      if (heroAnimated) return;
+      heroAnimated = true;
+      const line1Text = 'FORWARD';
+      const line2Text = 'THINKING.';
+      const line1El = document.getElementById('heroLine1');
+      const line2El = document.getElementById('heroLine2');
+      const heroSub = document.getElementById('heroSub');
+      const heroCta = document.getElementById('heroCta');
+
+      let delay = 0;
+
+      // Line 1: FORWARD
+      line1Text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        span.textContent = char;
+        span.style.transitionDelay = (delay + i * 0.06) + 's';
+        line1El.appendChild(span);
+      });
+
+      // Line 2: THINKING.
+      line2Text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        if (char === '.' ) {
+          span.classList.add('accent-dot');
+        }
+        span.textContent = char;
+        span.style.transitionDelay = (delay + (line1Text.length + i) * 0.06) + 's';
+        line2El.appendChild(span);
+      });
+
+      // Trigger letter animations
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.hero-heading .letter').forEach(l => l.classList.add('is-visible'));
+        heroSub.classList.add('is-visible');
+        heroCta.classList.add('is-visible');
+      });
+    }
+
+    // ===== MOUSE STALKER =====
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Hover effect for interactive elements
+    document.querySelectorAll('a, button, .bento-item, .about-card, .scope-item, input, textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorDot.classList.add('is-hover');
+        cursorRing.classList.add('is-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorDot.classList.remove('is-hover');
+        cursorRing.classList.remove('is-hover');
+      });
     });
 
     // ===== SCROLL REVEAL =====
@@ -1194,8 +1481,7 @@
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          const offset = 80;
-          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
         }
       });
     });
@@ -1223,18 +1509,16 @@
     }, { threshold: 0.5 });
     counters.forEach(c => counterObserver.observe(c));
 
-    // ===== HERO CANVAS - Network Animation =====
+    // ===== HERO CANVAS =====
     const canvas = document.getElementById('heroCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
-    let mouse = { x: 0, y: 0 };
     let animId;
 
     function resizeCanvas() {
       canvas.width = canvas.parentElement.offsetWidth;
       canvas.height = canvas.parentElement.offsetHeight;
     }
-
     function createParticles() {
       particles = [];
       const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
@@ -1248,19 +1532,16 @@
         });
       }
     }
-
     function drawParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach((p, i) => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(255,107,0,0.25)';
         ctx.fill();
-
         for (let j = i + 1; j < particles.length; j++) {
           const dx = p.x - particles[j].x;
           const dy = p.y - particles[j].y;
@@ -1277,19 +1558,82 @@
       });
       animId = requestAnimationFrame(drawParticles);
     }
-
-    resizeCanvas();
-    createParticles();
-    drawParticles();
+    resizeCanvas(); createParticles(); drawParticles();
     window.addEventListener('resize', () => { resizeCanvas(); createParticles(); });
 
-    // Stop animation when hero is out of view
     const heroSection = document.getElementById('hero');
     const heroObserver = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) cancelAnimationFrame(animId);
       else drawParticles();
     }, { threshold: 0 });
     heroObserver.observe(heroSection);
+
+    // ===== CONTACT FORM → GOOGLE SHEETS =====
+    /*
+     * Google Sheets連携の設定手順:
+     * 1. Googleスプレッドシートを新規作成
+     * 2. 「拡張機能」→「Apps Script」を開く
+     * 3. 以下のコードを貼り付けてデプロイ:
+     *
+     * function doPost(e) {
+     *   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     *   var data = JSON.parse(e.postData.contents);
+     *   sheet.appendRow([
+     *     new Date(),
+     *     data.company || '',
+     *     data.name || '',
+     *     data.email || '',
+     *     data.phone || '',
+     *     data.message || ''
+     *   ]);
+     *   return ContentService.createTextOutput(JSON.stringify({result:'success'}))
+     *     .setMimeType(ContentService.MimeType.JSON);
+     * }
+     *
+     * 4. デプロイ → 「ウェブアプリ」→ 「全員がアクセス可能」で公開
+     * 5. 生成されたURLを下のSCRIPT_URLに貼り付け
+     */
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRvsiJXOcc8cW8G0yAhn1uCrO4mnWiAH7QeXN_IngP5rbplfqk9TIU-gRnb5r2P97A/exec';
+
+    const contactForm = document.getElementById('contactForm');
+    const formSubmit = document.getElementById('formSubmit');
+    const formSuccess = document.getElementById('formSuccess');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formSubmit.disabled = true;
+      formSubmit.innerHTML = 'Sending...';
+
+      const formData = {
+        company: contactForm.company.value,
+        name: contactForm.name.value,
+        email: contactForm.email.value,
+        phone: contactForm.phone.value,
+        message: contactForm.message.value,
+      };
+
+      try {
+        if (SCRIPT_URL) {
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+          });
+        }
+        contactForm.reset();
+        formSuccess.classList.add('is-visible');
+        formSubmit.innerHTML = 'Sent! <span class="arrow">&check;</span>';
+        setTimeout(() => {
+          formSubmit.disabled = false;
+          formSubmit.innerHTML = 'Send Message <span class="arrow">&rarr;</span>';
+        }, 4000);
+      } catch (err) {
+        formSubmit.disabled = false;
+        formSubmit.innerHTML = 'Send Message <span class="arrow">&rarr;</span>';
+        alert('送信に失敗しました。時間を置いて再度お試しください。');
+      }
+    });
   </script>
 </body>
 </html>
