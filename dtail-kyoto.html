@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D.tail 京都 | Design in the Detail.</title>
+  <meta name="description" content="D.tail 京都 — プロフェッショナルのためのオーダースーツブランド。京都の美意識と現代のテーラリングを融合し、あなただけの特別な一着を仕立てます。">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Montserrat:wght@300;500&family=Noto+Serif+JP:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            logoMain: ['"Cormorant Garamond"', 'serif'],
+            logoSub: ['"Montserrat"', 'sans-serif'],
+            serif: ['"Noto Serif JP"', 'serif'],
+          },
+          colors: {
+            navy: '#12161F',
+            gold: '#C5A059',
+            'gold-light': '#E5D5B7',
+            bone: '#F2EFE9',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background-color: #FFFFFF;
+      color: #12161F;
+      overflow-x: hidden;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    /* --- Logo --- */
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 0.9;
+    }
+    .brand-logo-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      text-transform: none;
+    }
+    .brand-logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-left: 0.2em;
+      margin-top: 0.2rem;
+      color: #C5A059;
+    }
+    @media (min-width: 768px) {
+      .brand-logo-main { font-size: 2.1rem; }
+      .brand-logo-sub { font-size: 0.65rem; }
+    }
+
+    .img-monochrome-to-color {
+      filter: grayscale(100%);
+      transition: filter 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: filter, transform;
+    }
+    .img-monochrome-to-color:hover {
+      filter: grayscale(0%);
+      transform: scale(1.02);
+    }
+
+    .editorial-title {
+      line-height: 1.2;
+      letter-spacing: 0.05em;
+    }
+    @media (min-width: 768px) {
+      .editorial-title {
+        line-height: 1.4;
+        letter-spacing: 0.12em;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vertical-text {
+      writing-mode: vertical-rl;
+      letter-spacing: 0.5em;
+    }
+
+    .hero-img-container {
+      width: 100%;
+      height: 50vh;
+      overflow: hidden;
+      box-shadow: 20px 20px 60px -10px rgba(18, 22, 31, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.15);
+    }
+    @media (min-width: 1024px) {
+      .hero-img-container {
+        height: 70vh;
+        box-shadow: 40px 40px 90px -20px rgba(18, 22, 31, 0.2);
+      }
+    }
+    .hero-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gold-line {
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    .gold-line::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, #C5A059, transparent);
+    }
+
+    .cta-bg-image {
+      background-image: linear-gradient(rgba(18, 22, 31, 0.85), rgba(18, 22, 31, 0.85)),
+        url('https://images.unsplash.com/photo-1553315164-49bb0615e0c6?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      background-attachment: scroll;
+    }
+    @media (min-width: 1024px) {
+      .cta-bg-image {
+        background-attachment: fixed;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Header -->
+  <nav class="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-3 md:py-4 flex justify-between items-center bg-bone/95 backdrop-blur-xl border-b border-navy/5">
+    <a href="#" class="brand-logo text-navy group">
+      <span class="brand-logo-main">D<span class="text-gold">.</span>tail</span>
+      <span class="brand-logo-sub">Kyoto</span>
+    </a>
+    <div class="flex items-center">
+      <a href="https://forms.gle/" target="_blank"
+         class="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase bg-navy text-white px-5 py-2.5 md:px-8 md:py-3 hover:bg-gold transition-colors duration-300">
+        無料カウンセリング
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 pt-20 overflow-hidden bg-bone">
+    <div class="absolute -right-20 top-1/4 w-64 md:w-96 h-64 md:h-96 bg-gold/10 blur-[80px] md:blur-[120px] rounded-full"></div>
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center w-full max-w-7xl mx-auto relative py-12">
+      <div class="lg:col-span-6 z-10 text-left">
+        <div class="reveal active">
+          <div class="flex items-center space-x-4 mb-4 md:mb-6">
+            <span class="w-8 md:w-12 h-[1px] bg-gold"></span>
+            <p class="text-gold text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.6em] font-bold uppercase">The Art of Bespoke in Kyoto</p>
+          </div>
+          <h1 class="editorial-title font-serif text-[2.4rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[4.8rem] font-bold mb-6 md:mb-10 text-navy leading-tight">
+            Design is in<br>
+            the <span class="italic font-light text-gold/60">Detail</span>
+          </h1>
+          <div class="max-w-xl border-l-2 border-gold/30 pl-6 md:pl-10">
+            <p class="text-base md:text-xl font-serif leading-relaxed mb-8 md:mb-12 tracking-wider text-navy/80 text-balance">
+              言葉で語るよりも、その一着が。<br class="hidden sm:inline">
+              今のあなたを、誰よりも魅力的に証明する。
+            </p>
+            <div class="flex">
+              <a href="#process" class="group flex items-center space-x-4 text-[10px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase text-navy">
+                <span class="border-b border-navy/20 pb-1 group-hover:text-gold group-hover:border-gold transition-all duration-300">How It Works</span>
+                <span class="text-gold group-hover:translate-x-2 transition-transform duration-300 text-lg">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-6 w-full">
+        <div class="reveal active hero-img-container rounded-sm">
+          <img src="https://images.unsplash.com/photo-1633655442432-620aa55d7ac1?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="D.tail Kyoto ヒーロー" class="img-monochrome-to-color">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept Section -->
+  <section id="concept" class="py-20 md:py-40 px-6 md:px-12 lg:px-20 bg-white relative">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+      <div class="reveal order-2 md:order-1 relative">
+        <div class="absolute -top-4 -left-4 md:-top-6 md:-left-6 w-20 md:w-32 h-20 md:h-32 border-t border-l border-gold/40"></div>
+        <div class="overflow-hidden shadow-xl md:shadow-2xl relative z-10 rounded-sm">
+          <img src="https://images.unsplash.com/photo-1633655442356-ab2dbc69c772?q=80&w=770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="裁縫の技術" class="w-full h-[40vh] md:h-[60vh] object-cover img-monochrome-to-color">
+        </div>
+      </div>
+      <div class="reveal order-1 md:order-2 space-y-6 md:space-y-10">
+        <h2 class="editorial-title text-2xl sm:text-3xl md:text-5xl font-bold gold-line text-navy text-balance">
+          凛とした佇まいと、<br>解き放たれるような軽さ。
+        </h2>
+        <p class="text-navy/70 leading-relaxed md:leading-loose text-base md:text-lg font-light text-balance">
+          D.tail 京都（ディーテイル京都）が提供するのは、重厚な鎧ではなく、思考を邪魔しない自由な衣服。伝統と革新を融合させた、あなただけの特別な一着を。
+        </p>
+        <div class="pt-4 md:pt-8">
+          <span class="text-gold text-xl md:text-2xl italic font-light tracking-[0.2em] block mb-2">「Smart Precision」</span>
+          <p class="text-[9px] md:text-[10px] text-navy/40 tracking-[0.4em] uppercase">Bespoke Excellence</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection Section -->
+  <section class="py-20 md:py-40 px-6 md:px-12 lg:px-20 bg-bone relative">
+    <div class="text-center mb-12 md:mb-24 reveal">
+      <p class="text-gold text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.6em] uppercase mb-4 font-bold">Selection</p>
+      <h2 class="text-3xl md:text-5xl font-bold tracking-widest text-navy">Collection</h2>
+      <div class="w-12 md:w-16 h-[1px] bg-gold mx-auto mt-6 md:mt-8"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 max-w-7xl mx-auto items-start">
+      <div class="reveal group">
+        <div class="aspect-[4/5] overflow-hidden shadow-lg md:shadow-2xl mb-6 md:mb-8 relative border border-white/20 rounded-sm">
+          <img src="https://images.unsplash.com/photo-1669207261271-a0041d4b0948?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="スタンダードスーツ" class="w-full h-full object-cover img-monochrome-to-color">
+        </div>
+        <div class="text-center space-y-2 md:space-y-3">
+          <h3 class="text-xl md:text-2xl font-bold tracking-widest text-navy uppercase">Standard</h3>
+          <p class="text-gold font-serif italic text-base md:text-lg tracking-widest">¥50,000〜</p>
+        </div>
+      </div>
+      <div class="reveal group">
+        <div class="aspect-[4/5] overflow-hidden shadow-lg md:shadow-2xl mb-6 md:mb-8 relative border border-gold/20 rounded-sm">
+          <img src="https://images.unsplash.com/photo-1618866903271-595806e0679d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI3fHxzdWl0fGVufDB8fDB8fHww" alt="プレミアムスーツ" class="w-full h-full object-cover img-monochrome-to-color">
+        </div>
+        <div class="text-center space-y-2 md:space-y-3">
+          <h3 class="text-xl md:text-2xl font-bold tracking-widest text-navy uppercase">Premium</h3>
+          <p class="text-gold font-serif italic text-base md:text-lg tracking-widest">¥80,000〜</p>
+        </div>
+      </div>
+      <div class="reveal group sm:col-span-2 lg:col-span-1 sm:max-w-md sm:mx-auto lg:w-full">
+        <div class="aspect-[4/5] overflow-hidden shadow-lg md:shadow-2xl mb-6 md:mb-8 relative border border-white/20 rounded-sm">
+          <img src="https://images.unsplash.com/photo-1600091166971-7f9faad6c1e2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="フォーマルスーツ" class="w-full h-full object-cover img-monochrome-to-color">
+        </div>
+        <div class="text-center space-y-2 md:space-y-3">
+          <h3 class="text-xl md:text-2xl font-bold tracking-widest text-navy uppercase">Formal</h3>
+          <p class="text-gold font-serif italic text-base md:text-lg tracking-widest">¥100,000〜</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process" class="py-20 md:py-40 px-6 md:px-12 lg:px-20 bg-navy text-white overflow-hidden relative">
+    <div class="absolute left-0 top-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+    <div class="absolute right-0 top-10 md:top-0 text-[30vw] md:text-[20vw] font-black text-white/5 italic select-none leading-none vertical-text opacity-30 md:opacity-100 uppercase">京都</div>
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
+      <div class="reveal">
+        <div class="flex items-center space-x-4 mb-8 md:mb-10 text-gold">
+          <span class="w-6 md:w-8 h-[1px] bg-gold"></span>
+          <p class="text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.5em] font-bold uppercase">Experience</p>
+        </div>
+        <h2 class="text-3xl md:text-5xl mb-12 md:mb-20 font-bold leading-tight tracking-wide md:tracking-widest text-white text-balance">
+          場所に縛られない、<br>
+          <span class="text-gold font-light italic">現代</span>のビスポーク体験。
+        </h2>
+        <div class="space-y-10 md:space-y-16">
+          <div class="flex items-start space-x-6 md:space-x-10">
+            <span class="text-gold text-3xl md:text-4xl font-light italic border-b border-gold/20 pb-1 md:pb-2 leading-none">01</span>
+            <div class="space-y-2 md:space-y-3">
+              <h4 class="text-lg md:text-xl font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase">オンラインカウンセリング</h4>
+              <p class="text-white/60 text-sm md:text-base font-light leading-relaxed">
+                まずはWebから無料カウンセリングをご予約。<br>オンラインでスタイルやお悩みをヒアリングします。
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-6 md:space-x-10">
+            <span class="text-gold text-3xl md:text-4xl font-light italic border-b border-gold/20 pb-1 md:pb-2 leading-none">02</span>
+            <div class="space-y-2 md:space-y-3">
+              <h4 class="text-lg md:text-xl font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase">フィッティング訪問</h4>
+              <p class="text-white/60 text-sm md:text-base font-light leading-relaxed">
+                専属フィッターがご自宅やオフィス等へ訪問。<br>実際の生地を手に取りながら、精密に採寸します。
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-6 md:space-x-10">
+            <span class="text-gold text-3xl md:text-4xl font-light italic border-b border-gold/20 pb-1 md:pb-2 leading-none">03</span>
+            <div class="space-y-2 md:space-y-3">
+              <h4 class="text-lg md:text-xl font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase">お届け</h4>
+              <p class="text-white/60 text-sm md:text-base font-light leading-relaxed">
+                オーダーから約4〜6週間。<br>こだわり抜いた一着を、直接お手元にお届けします。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal hidden lg:block overflow-hidden h-[70vh] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/5 rounded-sm">
+        <img src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?q=80&w=1000&auto=format&fit=crop" alt="ビスポーク生地" class="w-full h-full object-cover img-monochrome-to-color">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Contact Section -->
+  <section id="contact" class="py-32 md:py-56 px-6 md:px-12 lg:px-20 cta-bg-image text-center relative overflow-hidden">
+    <div class="max-w-4xl mx-auto reveal relative z-10 text-white">
+      <p class="text-gold text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.8em] uppercase mb-6 md:mb-10 font-bold">Experience the Detail</p>
+      <h2 class="text-4xl sm:text-6xl md:text-8xl mb-8 md:mb-12 font-bold tracking-tighter italic">未来へ踏み出そう。</h2>
+      <div class="w-12 md:w-16 h-[1px] bg-gold mx-auto mb-8 md:mb-12"></div>
+      <p class="text-white/90 mb-12 md:mb-20 text-lg md:text-2xl font-light leading-relaxed tracking-widest max-w-2xl mx-auto text-balance">
+        人生を前進させるための一着。<br>まずはWebの無料カウンセリングから。
+      </p>
+      <a href="https://forms.gle/" target="_blank"
+         class="inline-block bg-gold text-navy px-10 md:px-16 py-4 md:py-5 text-[11px] md:text-[13px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase hover:bg-white transition-colors duration-300 shadow-2xl">
+        無料カウンセリングを予約する
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 md:py-20 text-center bg-navy text-white border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <a href="#" class="brand-logo text-white inline-flex mb-6 opacity-80 hover:opacity-100 transition-opacity">
+        <span class="brand-logo-main">D<span class="text-gold">.</span>tail</span>
+        <span class="brand-logo-sub text-white/50">Kyoto</span>
+      </a>
+      <div class="flex justify-center space-x-6 mb-8 text-[10px] uppercase tracking-widest text-white/40">
+        <a href="#" class="hover:text-gold transition-colors">Instagram</a>
+        <a href="#" class="hover:text-gold transition-colors">Privacy</a>
+      </div>
+      <p class="text-[9px] md:text-[10px] text-white/20 tracking-widest">&copy; 2026 D.tail Kyoto — An EveGo Inc. Brand. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
